@@ -1,8 +1,3 @@
-export interface ConnectionConfiguration {
-  user: String;
-  password: String;
-}
-
 export enum Operation {
   ACCORDING = 'ACCORDING',
   CLICK = 'CLICK',
