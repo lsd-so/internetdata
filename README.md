@@ -6,7 +6,7 @@ Want internet data in your TypeScript application? Just install it with npm.
 $ npm i internetdata
 ```
 
-Or add with yarn.
+Or add it with yarn.
 
 ```bash
 $ yarn add internetdata
