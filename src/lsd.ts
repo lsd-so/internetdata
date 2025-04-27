@@ -1,5 +1,5 @@
-import { Connection, ConnectionConfiguration } from './connection';
-import { Trip } from './trip';
+import { Connection, ConnectionConfiguration } from "./connection";
+import { Trip } from "./trip";
 
 export class LSD {
   connection: Connection;
@@ -9,7 +9,7 @@ export class LSD {
   }
 
   async connect(): Promise<Trip> {
-    const trip = new Trip();
-    // Here is where we would attempt to connect to a postgres connection
+    const trip = new Trip(this.connection);
+    return trip;
   }
 }

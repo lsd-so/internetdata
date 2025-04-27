@@ -1,13 +1,13 @@
-import { LSD } from './lsd';
-import { ConnectionConfiguration } from './types';
+import { ConnectionConfiguration } from "./connection";
+import { LSD } from "./lsd";
 
 export const tab = async (connectionConfiguration: ConnectionConfiguration) => {
   const newLSD = new LSD(connectionConfiguration);
-  const errorMessage = await newLSD.connect();
-
-  if (errorMessage?.length ?? 0 > 0) {
-    throw new Error(errorMessage);
-  }
+  await newLSD.connect();
 
   return newLSD;
-}
+};
+
+export default {
+  tab,
+};
