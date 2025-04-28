@@ -1,0 +1,15 @@
+{
+  "name": "LSD_docs_example",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "ts-node index.ts"
+  },
+  "dependencies": {
+    "@types/node": "^22.15.2",
+    "internetdata": "1.0.28",
+    "ts-node": "^10.9.2",
+    "zod": "^3.24.3"
+  }
+}
