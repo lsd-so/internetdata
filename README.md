@@ -1,6 +1,6 @@
 # internetdata
 
-![TypeScript logo but with blotter paper as the background](/media/ts-blotter.png)
+![TypeScript logo but with blotter paper as the background](https://pub-662d5a25493347a99b839351ec266583.r2.dev/ts-blotter.png)
 
 ## Installation
 
