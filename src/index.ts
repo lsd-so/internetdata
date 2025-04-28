@@ -17,7 +17,7 @@ export class Connection {
       connectionConfiguration?.user || process.env.LSD_USER || "";
     if (userToUse.length === 0) {
       throw new Error(
-        "Missing an LSD user, specify [user] in the configuration object",
+        "Missing an LSD user, specify [user] in the configuration object or set the [LSD_USER] environment variable",
       );
     }
 
@@ -25,7 +25,7 @@ export class Connection {
       connectionConfiguration?.password || process.env.LSD_PASSWORD || "";
     if (passwordToUse.length === 0) {
       throw new Error(
-        "Missing an LSD password, specify [password] in the configuration object",
+        "Missing an LSD password, specify [password] in the configuration object or set the [LSD_PASSWORD] environment variable",
       );
     }
 
