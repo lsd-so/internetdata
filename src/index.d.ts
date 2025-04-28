@@ -20,5 +20,7 @@ declare module "internetdata" {
     connect(): Promise<Trip>;
   }
 
-  export function tab(connectionConfiguration?: ConnectionConfiguration): LSD;
+  export function tab(
+    connectionConfiguration?: ConnectionConfiguration,
+  ): Promise<Trip>;
 }

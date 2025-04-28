@@ -249,8 +249,11 @@ export class LSD {
   }
 }
 
-export const tab = (connectionConfiguration?: ConnectionConfiguration): LSD => {
-  return new LSD(connectionConfiguration);
+export const tab = (
+  connectionConfiguration?: ConnectionConfiguration,
+): Promise<Trip> => {
+  const lsd = new LSD(connectionConfiguration);
+  return lsd.connect();
 };
 
 export default {

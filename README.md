@@ -18,17 +18,17 @@ $ yarn add internetdata
 
 ## Contents
 
-* [Quickstart](#quickstart)
-  * [Hacker News](#hacker-news)
-  * [Interacting with LSD docs](#interacting-with-lsd-docs)
-* [Codegen under the hood](#codegen-under-the-hood)
-* [Working with the local browser](#working-with-a-local-browser)
-  * [Google](#google)
-  * [McMaster-Carr](#mcmaster-carr)
-  * [Shopify](#shopify)
-* [Imitating a skill](#imitating-a-skill)
-* [Explanation plus using LSD end to end with the SDK](#using-lsd-end-to-end-with-the-sdk)
-* [How much does this cost?](#how-much-does-this-cost)
+- [Quickstart](#quickstart)
+  - [Hacker News](#hacker-news)
+  - [Interacting with LSD docs](#interacting-with-lsd-docs)
+- [Codegen under the hood](#codegen-under-the-hood)
+- [Working with the local browser](#working-with-a-local-browser)
+  - [Google](#google)
+  - [McMaster-Carr](#mcmaster-carr)
+  - [Shopify](#shopify)
+- [Imitating a skill](#imitating-a-skill)
+- [Explanation plus using LSD end to end with the SDK](#using-lsd-end-to-end-with-the-sdk)
+- [How much does this cost?](#how-much-does-this-cost)
 
 ## Quickstart
 
@@ -39,8 +39,8 @@ See the [`examples/`](https://github.com/lsd-so/internetdata/tree/main/examples)
 1. Import the default export from `internetdata` as well as [zod](https://zod.dev/).
 
 ```typescript
-import drop from 'internetdata';
-import { z } from 'zod';
+import drop from "internetdata";
+import { z } from "zod";
 ```
 
 2. Call the [`tab(connectionConfiguration?: ConnectionConfiguration)`](https://github.com/lsd-so/internetdata/blob/main/src/index.ts#L252) method to get an LSD object then connect to our [postgres-compatible](https://lsd.so/docs/database/postgres/postgres-compatible) database to receive a promise for a trip.
@@ -63,16 +63,17 @@ const trip = await lsd.connect(); // Promise<Trip>
 3. Declare the zod schema you're interested in getting data from the web back in.
 
 ```typescript
-const hnSchema = z.array(z.object({
-  post: z.string(),
-  post_link: z.string(),
-}));
+const hnSchema = z.array(
+  z.object({
+    post: z.string(),
+  }),
+);
 ```
 
 Additionally, you can infer a strong type definition for the objects you're interested in.
 
 ```typescript
-type HNType = z.infer<typeof hnSchema>
+type HNType = z.infer<typeof hnSchema>;
 ```
 
 **Note:** If you're running into confusing Zod-related errors, see this [related guide](https://zod.dev/?id=writing-generic-functions) on working with generic functions and Zod.
@@ -81,11 +82,10 @@ type HNType = z.infer<typeof hnSchema>
 
 ```typescript
 const frontPage = await trip
-    .navigate('https://news.ycombinator.com')
-    .group('span.titleline')
-    .select('a', 'post')
-    .select('a@href', 'post_link')
-    .extrapolate<HNType>(hnSchema);
+  .navigate("https://news.ycombinator.com")
+  .group("span.titleline")
+  .select("a@href", "post")
+  .extrapolate<HNType>(hnSchema);
 ```
 
 Breaking this down line by line:
@@ -93,7 +93,7 @@ Breaking this down line by line:
 At the end when we call `extrapolate` we will be working with a promise for the results hence `await`ing here.
 
 ```typescript
-const frontPage = await trip
+const frontPage = await trip;
 ```
 
 The URL we're interested in retrieving data from is [https://news.ycombinator.com](https://news.ycombinator.com).
@@ -108,13 +108,7 @@ On the page there is a repeating container for each post that can be matched wit
     .group('span.titleline')
 ```
 
-The content within the anchor tag is what we'd understand as being the "post title".
-
-```typescript
-    .select('a', 'post')
-```
-
-The href [attribute](https://lsd.so/docs/database/language/attributes) is what we'd understand as being the "post link".
+The href [attribute](https://lsd.so/docs/database/language/attributes) is what we'd understand as being the "post".
 
 ```typescript
     .select('a@href', 'post_link')
@@ -142,8 +136,6 @@ Here is where we do similar to above but with the click keyword to then select t
 There may be times where you just want to refer to the thing without having to actually uncover what the thing technically is exactly. We currently have AI natively-embedded in the language for **SELECT** statements.
 
 ## Working with the local browser
-
-
 
 ## Imitating a skill
 
