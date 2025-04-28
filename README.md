@@ -185,7 +185,33 @@ console.log(docsTitle);
 
 There may be times where you just want to refer to the thing without having to actually uncover what the thing technically is exactly. We currently have AI natively-embedded in the language for **SELECT** statements.
 
-TODO make example for lobsters and author
+See the [Lobsters codegen example](https://github.com/lsd-so/internetdata/tree/main/examples/lobsters_codegen) for the full code example.
+
+```typescript
+const trip = await drop.tab();
+
+const lobstersSchema = z.array(
+  z.object({
+    author: z.string(),
+  }),
+);
+
+const authors = await trip
+  .on("BROWSER")
+  .navigate("https://lobste.rs")
+  .group("ol.stories li")
+  .select("author")
+  .extrapolate<typeof lobstersSchema>(lobstersSchema);
+
+console.log("Who are the authors on the front page of Lobsters?");
+console.log(authors);
+```
+
+Most of the above code matches what you'll find in the other tutorials within this README except for the `.select()` call:
+
+```typescript
+  .select("author")
+```
 
 ## Working with the local browser
 
