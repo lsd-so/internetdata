@@ -12,21 +12,28 @@ export class Connection {
   connectionConfiguration: ConnectionConfiguration;
   sqlConn?: postgres.Sql;
 
-  constructor(connectionConfiguration: ConnectionConfiguration) {
-    if (connectionConfiguration.user.length === 0) {
+  constructor(connectionConfiguration?: ConnectionConfiguration) {
+    const userToUse =
+      connectionConfiguration?.user || process.env.LSD_USER || "";
+    if (userToUse.length === 0) {
       throw new Error(
         "Missing an LSD user, specify [user] in the configuration object",
       );
     }
 
-    if (connectionConfiguration.password.length === 0) {
+    const passwordToUse =
+      connectionConfiguration?.password || process.env.LSD_PASSWORD || "";
+    if (passwordToUse.length === 0) {
       throw new Error(
         "Missing an LSD password, specify [password] in the configuration object",
       );
     }
 
     this.host = "lsd.so";
-    this.connectionConfiguration = connectionConfiguration;
+    this.connectionConfiguration = {
+      user: userToUse,
+      password: passwordToUse,
+    };
     this.sqlConn = undefined;
   }
 
@@ -232,7 +239,7 @@ export class Trip {
 export class LSD {
   connection: Connection;
 
-  constructor(connectionConfiguration: ConnectionConfiguration) {
+  constructor(connectionConfiguration?: ConnectionConfiguration) {
     this.connection = new Connection(connectionConfiguration);
   }
 
@@ -242,7 +249,7 @@ export class LSD {
   }
 }
 
-export const tab = (connectionConfiguration: ConnectionConfiguration): LSD => {
+export const tab = (connectionConfiguration?: ConnectionConfiguration): LSD => {
   return new LSD(connectionConfiguration);
 };
 
