@@ -67,7 +67,7 @@ type HNType = z.infer<typeof hnSchema>
 
 **Note:** If you're running into confusing Zod-related errors, see this [related guide](https://zod.dev/?id=writing-generic-functions) on working with generic functions and Zod.
 
-4. Now you can effectively [pipeline](https://herecomesthemoon.net/2025/04/pipelining/) the distinct web data you're looking to retrieve:
+4. Now you can effectively [pipeline](https://herecomesthemoon.net/2025/04/pipelining/) the web data you're looking to retrieve:
 
 ```typescript
 const frontPage = await trip
