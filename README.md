@@ -25,7 +25,7 @@ $ yarn add internetdata
 - [Working with the local browser](#working-with-a-local-browser)
   - [Google](#google)
   - [McMaster-Carr](#mcmaster-carr)
-- [Imitating a skill](#imitating-a-skill)
+- [Imitating a trip](#imitating-a-trip)
 - [How much does this cost?](#how-much-does-this-cost)
 
 ## Quickstart
@@ -313,11 +313,47 @@ console.log("What screws are available on McMaster Carr?");
 console.log(screwResults);
 ```
 
-## Imitating a skill
+## Imitating a trip
 
-This section should be end-to-end
+There may be [flows that are accomplishable](https://lsd.so/docs/database/language/functions) in [the LSD language](https://lsd.so/docs/database/language/types/keywords/dive) that are not yet accomplishable via the SDK, for these scenarios we allow you to "imitate" the [trip that was defined before you](https://lsd.so/docs/database/trips).
 
-You may want to do this because there are functionalities in our "database" language that have not been yet translated over to the SDK.
+For example, the trip `yev/hacker_news` has the following definition:
+
+```
+hn <| https://news.ycombinator.com/ |
+container <| span.titleline |
+post <| a |
+post_link <| post@href |
+
+front_page_of_hn <|> <|
+FROM hn
+|> GROUP BY container
+|> SELECT post, post_link |
+
+front_page_of_hn
+```
+
+Therefore, we can define the following Zod schema:
+
+```typescript
+const hnSchema = z.array(
+  z.object({
+    post: z.string(),
+    post_link: z.string(),
+  }),
+);
+```
+
+And then imitate the trip detailed above:
+
+```typescript
+const frontPage = await trip
+  .imitate("yev/hacker_news")
+  .extrapolate<typeof hnSchema>(hnSchema);
+
+console.log("What are the posts on the front page of HN?");
+console.log(frontPage);
+```
 
 ## How much does this cost?
 
