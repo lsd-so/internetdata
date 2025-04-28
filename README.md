@@ -34,6 +34,8 @@ $ yarn add internetdata
 
 See the [`examples/`](https://github.com/lsd-so/internetdata/tree/main/examples) folder for complete code examples but shown below are the necessary pieces for getting started after [installing](#installation). This guide also assumes you've created an [API key](https://lsd.so/docs/database/connect/authenticating).
 
+### Hacker News
+
 1. Import the default export from `internetdata` as well as [zod](https://zod.dev/).
 
 ```typescript
@@ -45,7 +47,7 @@ import { z } from 'zod';
 
 ```typescript
 const lsd = await drop.tab();
-const trip = await lsd.connect();
+const trip = await lsd.connect(); // Promise<Trip>
 ```
 
 3. Declare the zod schema you're interested in getting data from the web back in.
@@ -53,11 +55,11 @@ const trip = await lsd.connect();
 ```typescript
 const hnSchema = z.array(z.object({
   post: z.string(),
-  author: z.string(),
+  post_link: z.string(),
 }));
 ```
 
-Additionally, you can infer a strong type definition for the object[s] you're interested in
+Additionally, you can infer a strong type definition for the objects you're interested in.
 
 ```typescript
 type HNType = z.infer<typeof hnSchema>
@@ -65,7 +67,34 @@ type HNType = z.infer<typeof hnSchema>
 
 **Note:** If you're running into confusing Zod-related errors, see this [related guide](https://zod.dev/?id=writing-generic-functions) on working with generic functions and Zod.
 
+4. Now you can effectively [pipeline](https://herecomesthemoon.net/2025/04/pipelining/) the distinct web data you're looking to retrieve:
+
+```typescript
+const frontPage = await trip
+    .navigate('https://news.ycombinator.com')
+	.group('span.titleline')
+	.select('a', 'post')
+	.select('a@href', 'post_link')
+```
+
+Distilling this line by line:
+
+TODO each daisy chained line
+
+5. Now you have a strongly typed collection for the front page of Hacker News!
+
+```typescript
+console.log("What are the posts on the front page of HN?");
+console.log(frontPage);
+```
+
+### Interacting with LSD docs
+
+Here is where we do similar to above but with the click keyword to then select title at end
+
 ## Codegen under the hood
+
+There may be times where you just want to refer to the thing without having to actually uncover what the thing technically is exactly. We currently have AI natively-embedded in the language for **SELECT** statements.
 
 ## Working with the local browser
 
