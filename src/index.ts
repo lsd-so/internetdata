@@ -10,8 +10,10 @@ export const tab = (connectionConfiguration: ConnectionConfiguration): LSD => {
   return new LSD(connectionConfiguration);
 };
 
-const sheet = {
-  tab,
-};
+class Sheet {
+  static tab(connectionConfiguration: ConnectionConfiguration): LSD {
+    return tab(connectionConfiguration);
+  }
+}
 
-export default sheet;
+export default Sheet;

@@ -31,9 +31,9 @@ declare module "internetdata" {
 
   export function tab(connectionConfiguration: ConnectionConfiguration): LSD;
 
-  type Sheet = {
-    tab(connectionConfiguration: ConnectionConfiguration): LSD;
-  };
+  class Sheet {
+    static tab(connectionConfiguration: ConnectionConfiguration): LSD;
+  }
 
   export default Sheet;
 }
