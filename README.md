@@ -30,7 +30,7 @@ $ yarn add internetdata
 
 ## Quickstart
 
-See the [`examples/`](https://github.com/lsd-so/internetdata/tree/main/examples) folder for complete code examples but shown below are the necessary pieces for getting started after [installing](#installation). The guides also assume you've created an [API key](https://lsd.so/docs/database/connect/authenticating).
+See the [`examples/`](https://github.com/lsd-so/internetdata/tree/main/examples) folder for complete code examples but shown below are the necessary pieces for getting started after [installing](#installation). The guide also assumes you've created an [API key](https://lsd.so/docs/database/connect/authenticating).
 
 ### Hacker News
 
