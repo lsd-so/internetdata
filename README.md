@@ -25,9 +25,7 @@ $ yarn add internetdata
 - [Working with the local browser](#working-with-a-local-browser)
   - [Google](#google)
   - [McMaster-Carr](#mcmaster-carr)
-  - [Shopify](#shopify)
 - [Imitating a skill](#imitating-a-skill)
-- [Explanation plus using LSD end to end with the SDK](#using-lsd-end-to-end-with-the-sdk)
 - [How much does this cost?](#how-much-does-this-cost)
 
 ## Quickstart
@@ -156,9 +154,11 @@ const trip = await drop.tab({
 3. Declare the zod schema you're interested in getting data from the web back in.
 
 ```typescript
-const docsSchema = z.array(z.object({
-  title: z.string()
-}));
+const docsSchema = z.array(
+  z.object({
+    title: z.string(),
+  }),
+);
 ```
 
 4. Now you can effectively [pipeline](https://herecomesthemoon.net/2025/04/pipelining/) the web data you're looking to retrieve:
@@ -168,7 +168,7 @@ const docsTitle = await trip
   .on("TRAVERSER")
   .navigate(`https://lsd.so/docs`)
   .click('a[href="/docs/database"]')
-  .select('title')
+  .select("title")
   .extrapolate<typeof docsSchema>(docsSchema);
 ```
 
@@ -185,11 +185,107 @@ console.log(docsTitle);
 
 There may be times where you just want to refer to the thing without having to actually uncover what the thing technically is exactly. We currently have AI natively-embedded in the language for **SELECT** statements.
 
+TODO make example for lobsters and author
+
 ## Working with the local browser
+
+There are a variety of reasons why you'd be interested in working with a local browser however this can be best understood as covering that "last mile" of web scraping thanks to the [LSD language](https://lsd.so/docs/database/language) being accomodating of both headless cloud browsers as well as [our own](https://lsd.so/bicycle).
+
+All that's needed is to indicate you're interested in tripping `.on()` the `"BROWSER"`.
+
+### Google
+
+A while back we incorporated [local browser control](https://x.com/itisyev/status/1848810470364397604) into the LSD language, here's how that looks using the SDK.
+
+1. Import the default export from `internetdata` as well as [zod](https://zod.dev/).
+
+```typescript
+import drop from "internetdata";
+import { z } from "zod";
+```
+
+2. Call the [`tab(connectionConfiguration?: ConnectionConfiguration)`](https://github.com/lsd-so/internetdata/blob/main/src/index.ts#L252) method to get a Promise for a trip.
+
+```typescript
+const trip = await drop.tab(); // Promise<Trip>
+```
+
+3. Declare the zod schema you're interested in getting data from the web back in.
+
+```typescript
+const googleSchema = z.array(
+  z.object({
+    result: z.string(),
+  }),
+);
+
+type GoogleType = typeof googleSchema;
+```
+
+4. Now you can effectively [pipeline](https://herecomesthemoon.net/2025/04/pipelining/) the web data you're looking to retrieve:
+
+```typescript
+const googleResults = await trip
+  .on("BROWSER")
+  .navigate(`https://www.google.com/search?q=what+is+lsd.so%3F`)
+  .group("div#search a")
+  .select("div#search a@href", "result")
+  .extrapolate<GoogleType>(googleSchema);
+```
+
+5. Now you have a strongly typed collection for the title of the docs page!
+
+```typescript
+console.log("What is LSD.so according to Google?");
+console.log(googleResults);
+```
+
+### McMaster-Carr
+
+1. Import the default export from `internetdata` as well as [zod](https://zod.dev/).
+
+```typescript
+import drop from "internetdata";
+import { z } from "zod";
+```
+
+2. Call the [`tab(connectionConfiguration?: ConnectionConfiguration)`](https://github.com/lsd-so/internetdata/blob/main/src/index.ts#L252) method to get a Promise for a trip.
+
+```typescript
+const trip = await drop.tab(); // Promise<Trip>
+```
+
+3. Declare the zod schema you're interested in getting data from the web back in.
+
+```typescript
+const mcmasterSchema = z.array(
+  z.object({
+    name_of_screw: z.string(),
+  }),
+);
+```
+
+4. 4. Now you can effectively [pipeline](https://herecomesthemoon.net/2025/04/pipelining/) the web data you're looking to retrieve:
+
+```typescript
+const screwResults = await trip
+  .on("BROWSER")
+  .navigate(`https://www.mcmaster.com/products/screws/`)
+  .group('div[class*="TileLayout_textContainer"]')
+  .select('div[class*="TileLayout_titleContainer"]', "name_of_screw")
+  .extrapolate<McMasterType>(mcmasterSchema);
+```
+
+5. Now you have a strongly typed collection for the names of screws on McMaster-Carr!
+
+```typescript
+console.log("What screws are available on McMaster Carr?");
+console.log(screwResults);
+```
 
 ## Imitating a skill
 
-## Explanation plus using LSD end to end with the SDK
+This section should be end-to-end
 
 ## How much does this cost?
 
