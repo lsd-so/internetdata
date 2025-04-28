@@ -32,7 +32,7 @@ $ yarn add internetdata
 
 ## Quickstart
 
-See the [`examples/`]() folder for complete code examples but shown below are the necessary pieces for getting started after [installing](#installation). This guide also assumes you've created an [API key](https://lsd.so/docs/database/connect/authenticating).
+See the [`examples/`](https://github.com/lsd-so/internetdata/tree/main/examples) folder for complete code examples but shown below are the necessary pieces for getting started after [installing](#installation). This guide also assumes you've created an [API key](https://lsd.so/docs/database/connect/authenticating).
 
 1. Import the default export from `internetdata` as well as [zod](https://zod.dev/).
 
