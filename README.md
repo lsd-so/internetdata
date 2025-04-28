@@ -183,7 +183,7 @@ console.log(docsTitle);
 
 ## Codegen under the hood
 
-There may be times where you just want to refer to the thing without having to actually uncover what the thing technically is exactly. We currently have AI natively-embedded in the language for **SELECT** statements.
+There may be times where you just want to refer to the thing without having to actually uncover what the thing technically is exactly. We currently have AI natively embedded in the language for **SELECT** statements.
 
 See the [Lobsters codegen example](https://github.com/lsd-so/internetdata/tree/main/examples/lobsters_codegen) for the full code example.
 
