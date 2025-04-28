@@ -1,18 +1,3 @@
-declare module "internetdata" {
-  export type Target = "BROWSER" | "TRAVERSER";
-
-  export interface ConnectionConfiguration {
-    user: String;
-    password: String;
-  }
-
-  export class LSD {
-    constructor(connectionConfiguration: ConnectionConfiguration): void;
-    connect(): Promise<Trip>;
-  }
-
-  export function tab(connectionConfiguration: ConnectionConfiguration): LSD;
-}
 declare module 'internetdata' {
   export type Target = "BROWSER" | "TRAVERSER";
 
