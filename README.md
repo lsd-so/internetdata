@@ -72,9 +72,10 @@ type HNType = z.infer<typeof hnSchema>
 ```typescript
 const frontPage = await trip
     .navigate('https://news.ycombinator.com')
-	.group('span.titleline')
-	.select('a', 'post')
-	.select('a@href', 'post_link')
+    .group('span.titleline')
+    .select('a', 'post')
+    .select('a@href', 'post_link')
+    .extrapolate<HNType>(hnSchema);
 ```
 
 Distilling this line by line:
