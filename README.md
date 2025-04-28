@@ -80,7 +80,41 @@ const frontPage = await trip
 
 Distilling this line by line:
 
-TODO each daisy chained line
+```typescript
+const frontPage = await trip
+```
+
+At the end when we call `extrapolate` we will be working with a promise for the results hence `await`ing here.
+
+```typescript
+    .navigate('https://news.ycombinator.com')
+```
+
+The URL we're interested in retrieving data from is [https://news.ycombinator.com](https://news.ycombinator.com).
+
+```typescript
+    .group('span.titleline')
+```
+
+On the page there is a repeating container for each post that can be matched with the CSS selector `span.titleline`.
+
+```typescript
+    .select('a', 'post')
+```
+
+The content within the anchor tag is what we'd understand as being the "post title".
+
+```typescript
+    .select('a@href', 'post_link')
+```
+
+The href [attribute](https://lsd.so/docs/database/language/attributes) is what we'd understand as being the "post link".
+
+```typescript
+    .extrapolate<HNType>(hnSchema);
+```
+
+Then finally we're going to extrapolate the object or list of objects from the trip.
 
 5. Now you have a strongly typed collection for the front page of Hacker News!
 
