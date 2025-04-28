@@ -213,6 +213,8 @@ Most of the above code matches what you'll find in the other tutorials within th
   .select("author")
 ```
 
+As you may notice, the word "author" is not a valid CSS selector but the program still comes out in the end with the requested data. This is due to two ingredients: the page HTML is accessible (by default LSD will not attempt to retrieve a page HTML solely for fulfilling an invalid selector). And, two, the page HTML's available at the step of selecting "author" because it was channeled through the local browser. If you were to request data through a cloud browser and _then_ attempt to codegen a CSS selector like above, it'd then work thanks to the default 15 minute cache.
+
 ## Working with the local browser
 
 There are a variety of reasons why you'd be interested in working with a local browser however this can be best understood as covering that "last mile" of web scraping thanks to the [LSD language](https://lsd.so/docs/database/language) being accomodating of both headless cloud browsers as well as [our own](https://lsd.so/bicycle).
@@ -312,6 +314,8 @@ console.log(screwResults);
 ## Imitating a skill
 
 This section should be end-to-end
+
+You may want to do this because there are functionalities in our "database" language that have not been yet translated over to the SDK.
 
 ## How much does this cost?
 
