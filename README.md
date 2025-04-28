@@ -43,7 +43,7 @@ import drop from 'internetdata';
 import { z } from 'zod';
 ```
 
-2. Call the `.tab(connectionConfiguration?: ConnectionConfiguration)` method to get an LSD object then connect to our [postgres-compatible](https://lsd.so/docs/database/postgres/postgres-compatible) database to receive a promise for a trip.
+2. Call the [`tab(connectionConfiguration?: ConnectionConfiguration)`](https://github.com/lsd-so/internetdata/blob/main/src/index.ts#L252) method to get an LSD object then connect to our [postgres-compatible](https://lsd.so/docs/database/postgres/postgres-compatible) database to receive a promise for a trip.
 
 ```typescript
 const lsd = await drop.tab();
