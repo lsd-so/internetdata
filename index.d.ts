@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { LSD } from './src/lsd';
 
 declare module "internetdata" {
   export interface ConnectionConfiguration {
@@ -24,16 +25,14 @@ declare module "internetdata" {
     extrapolate: <T extends z.ZodTypeAny>(schema: T) => Promise<T>;
   }
 
-  export class LSD {
-    constructor(connectionConfiguration: ConnectionConfiguration);
-    connect(): Promise<Trip>;
-  }
-
   export function tab(connectionConfiguration: ConnectionConfiguration): LSD;
-
-  class Sheet {
-    static tab(connectionConfiguration: ConnectionConfiguration): LSD;
-  }
-
-  export default Sheet;
 }
+
+interface ConnectionConfiguration {
+  user: String;
+  password: String;
+}
+declare const module: {
+  tab(connectionConfiguration: ConnectionConfiguration): LSD;
+}
+export default module;
