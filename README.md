@@ -78,43 +78,43 @@ const frontPage = await trip
     .extrapolate<HNType>(hnSchema);
 ```
 
-Distilling this line by line:
+Breaking this down line by line:
+
+At the end when we call `extrapolate` we will be working with a promise for the results hence `await`ing here.
 
 ```typescript
 const frontPage = await trip
 ```
 
-At the end when we call `extrapolate` we will be working with a promise for the results hence `await`ing here.
+The URL we're interested in retrieving data from is [https://news.ycombinator.com](https://news.ycombinator.com).
 
 ```typescript
     .navigate('https://news.ycombinator.com')
 ```
 
-The URL we're interested in retrieving data from is [https://news.ycombinator.com](https://news.ycombinator.com).
+On the page there is a repeating container for each post that can be matched with the CSS selector `span.titleline`.
 
 ```typescript
     .group('span.titleline')
 ```
 
-On the page there is a repeating container for each post that can be matched with the CSS selector `span.titleline`.
+The content within the anchor tag is what we'd understand as being the "post title".
 
 ```typescript
     .select('a', 'post')
 ```
 
-The content within the anchor tag is what we'd understand as being the "post title".
+The href [attribute](https://lsd.so/docs/database/language/attributes) is what we'd understand as being the "post link".
 
 ```typescript
     .select('a@href', 'post_link')
 ```
 
-The href [attribute](https://lsd.so/docs/database/language/attributes) is what we'd understand as being the "post link".
+Then finally we're going to extrapolate the object or list of objects from the trip.
 
 ```typescript
     .extrapolate<HNType>(hnSchema);
 ```
-
-Then finally we're going to extrapolate the object or list of objects from the trip.
 
 5. Now you have a strongly typed collection for the front page of Hacker News!
 
