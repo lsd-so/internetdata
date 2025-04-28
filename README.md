@@ -193,4 +193,4 @@ There may be times where you just want to refer to the thing without having to a
 
 ## How much does this cost?
 
-We care about enabling and empowering developers to program the web they want to. In short, we're planning to be free as a developer-friendly [Wayback Machine](https://web.archive.org/) unless you're interested in receiving support or prioritization for working on specific features. Reach out to [Yev](mailto:yev@lsd.so) if this interests you.
+We care about enabling and empowering developers to program the web they want to. In short, we're planning to be free as a developer-friendly [Wayback Machine](https://web.archive.org/) unless you're interested in receiving support or prioritization for working on specific features. [Reach out](mailto:yev@lsd.so) if this interests you.
