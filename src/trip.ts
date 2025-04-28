@@ -6,7 +6,7 @@ import {
   Operation,
   OperationIsAssigning,
   StringInstruction,
-  Target
+  Target,
 } from "./types";
 
 export class Trip {
@@ -34,10 +34,10 @@ export class Trip {
     this.extrapolate = this.extrapolate.bind(this);
   }
 
-  navigate(target: String): Trip {
+  navigate(destination: String): Trip {
     this.components.push({
       operation: Operation.FROM,
-      args: [target],
+      args: [destination],
     });
 
     return this;

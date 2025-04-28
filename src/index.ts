@@ -10,6 +10,8 @@ export const tab = (connectionConfiguration: ConnectionConfiguration): LSD => {
   return new LSD(connectionConfiguration);
 };
 
-export default {
+const sheet = {
   tab,
 };
+
+export default sheet;
