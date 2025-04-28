@@ -172,6 +172,8 @@ const docsTitle = await trip
   .extrapolate<typeof docsSchema>(docsSchema);
 ```
 
+Curious [what the "Traverser" means?](https://lsd.so/docs/internet/traverser)
+
 5. Now you have a strongly typed collection for the title of the docs page!
 
 ```typescript
