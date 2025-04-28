@@ -213,7 +213,9 @@ Most of the above code matches what you'll find in the other tutorials within th
   .select("author")
 ```
 
-As you may notice, the word "author" is not a valid CSS selector but the program still comes out in the end with the requested data. This is due to two ingredients: the page HTML is accessible (by default LSD will not attempt to retrieve a page HTML solely for fulfilling an invalid selector). And, two, the page HTML's available at the step of selecting "author" because it was channeled through the local browser. If you were to request data through a cloud browser and _then_ attempt to codegen a CSS selector like above, it'd then work thanks to the default 15 minute cache.
+As you may notice, the word "author" is not a valid CSS selector but the program still comes out in the end with the requested data. This is due to two ingredients: the page HTML is accessible (by default LSD will not attempt to retrieve a page HTML solely for fulfilling an invalid selector). And, two, the page HTML's available at the step of selecting "author" because it was channeled through the local browser.
+
+If you were to request data through a cloud browser and _then_ attempt to codegen a CSS selector like above, it'd then work thanks to the default 15 minute cache.
 
 ## Working with the local browser
 
