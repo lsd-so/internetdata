@@ -149,7 +149,31 @@ const trip = await drop.tab({
 }); // Promise<Trip>
 ```
 
-Here is where we do similar to above but with the click keyword to then select title at end
+3. Declare the zod schema you're interested in getting data from the web back in.
+
+```typescript
+const docsSchema = z.array(z.object({
+  title: z.string()
+}));
+```
+
+4. Now you can effectively [pipeline](https://herecomesthemoon.net/2025/04/pipelining/) the web data you're looking to retrieve:
+
+```typescript
+const docsTitle = await trip
+  .on("TRAVERSER")
+  .navigate(`https://lsd.so/docs`)
+  .click('a[href="/docs/database"]')
+  .select('title')
+  .extrapolate<typeof docsSchema>(docsSchema);
+```
+
+5. Now you have a strongly typed collection for the title of the docs page!
+
+```typescript
+console.log("What is the tile of the database docs page?");
+console.log(docsTitle);
+```
 
 ## Codegen under the hood
 
