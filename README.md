@@ -32,7 +32,7 @@ $ yarn add internetdata
 
 ## Quickstart
 
-See the [`examples/`](https://github.com/lsd-so/internetdata/tree/main/examples) folder for complete code examples but shown below are the necessary pieces for getting started after [installing](#installation). This guide also assumes you've created an [API key](https://lsd.so/docs/database/connect/authenticating).
+See the [`examples/`](https://github.com/lsd-so/internetdata/tree/main/examples) folder for complete code examples but shown below are the necessary pieces for getting started after [installing](#installation). The guides also assume you've created an [API key](https://lsd.so/docs/database/connect/authenticating).
 
 ### Hacker News
 
@@ -43,11 +43,10 @@ import drop from "internetdata";
 import { z } from "zod";
 ```
 
-2. Call the [`tab(connectionConfiguration?: ConnectionConfiguration)`](https://github.com/lsd-so/internetdata/blob/main/src/index.ts#L252) method to get an LSD object then connect to our [postgres-compatible](https://lsd.so/docs/database/postgres/postgres-compatible) database to receive a promise for a trip.
+2. Call the [`tab(connectionConfiguration?: ConnectionConfiguration)`](https://github.com/lsd-so/internetdata/blob/main/src/index.ts#L252) method to get a Promise for a trip.
 
 ```typescript
-const lsd = await drop.tab();
-const trip = await lsd.connect(); // Promise<Trip>
+const trip = await drop.tab(); // Promise<Trip>
 ```
 
 **Note:** The code snippet above assumes you've saved the username and API key to the `LSD_USER` and `LSD_PASSWORD` environment variables respectively. If you'd like to pass in a connection configuration object you can do so like below:
@@ -56,8 +55,7 @@ const trip = await lsd.connect(); // Promise<Trip>
 const lsd = await drop.tab({
   user: "your@email.com",
   password: "<api key>",
-});
-const trip = await lsd.connect(); // Promise<Trip>
+}); // Promise<Trip>
 ```
 
 3. Declare the zod schema you're interested in getting data from the web back in.
@@ -73,7 +71,7 @@ const hnSchema = z.array(
 Additionally, you can infer a strong type definition for the objects you're interested in.
 
 ```typescript
-type HNType = z.infer<typeof hnSchema>;
+type HNType = typeof hnSchema;
 ```
 
 **Note:** If you're running into confusing Zod-related errors, see this [related guide](https://zod.dev/?id=writing-generic-functions) on working with generic functions and Zod.
@@ -128,6 +126,28 @@ console.log(frontPage);
 ```
 
 ### Interacting with LSD docs
+
+1. Like with [Hacker News](#hacker-news), import the default export from `internetdata` as well as [zod](https://zod.dev/).
+
+```typescript
+import drop from "internetdata";
+import { z } from "zod";
+```
+
+2. Call the [`tab(connectionConfiguration?: ConnectionConfiguration)`](https://github.com/lsd-so/internetdata/blob/main/src/index.ts#L252) method to get a promise for a trip.
+
+```typescript
+const trip = await drop.tab(); // Promise<Trip>
+```
+
+**Note:** The code snippet above assumes you've saved the username and API key to the `LSD_USER` and `LSD_PASSWORD` environment variables respectively. If you'd like to pass in a connection configuration object you can do so like below:
+
+```typescript
+const trip = await drop.tab({
+  user: "your@email.com",
+  password: "<api key>",
+}); // Promise<Trip>
+```
 
 Here is where we do similar to above but with the click keyword to then select title at end
 
