@@ -6,9 +6,8 @@ import {
   Operation,
   OperationIsAssigning,
   StringInstruction,
+  Target
 } from "./types";
-
-export type Target = "BROWSER" | "TRAVERSER";
 
 export class Trip {
   // The postgres connection abstraction for executing queries

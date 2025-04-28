@@ -1,3 +1,5 @@
+export type Target = "BROWSER" | "TRAVERSER";
+
 export enum Operation {
   ACCORDING = "ACCORDING",
   CLICK = "CLICK",
