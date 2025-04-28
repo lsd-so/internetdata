@@ -36,6 +36,8 @@ See the [`examples/`](https://github.com/lsd-so/internetdata/tree/main/examples)
 
 ### Hacker News
 
+Go [here](https://github.com/lsd-so/internetdata/tree/main/examples/hn) for the full code example.
+
 1. Import the default export from `internetdata` as well as [zod](https://zod.dev/).
 
 ```typescript
@@ -126,6 +128,8 @@ console.log(frontPage);
 ```
 
 ### Interacting with LSD docs
+
+Go [here](https://github.com/lsd-so/internetdata/tree/main/examples/lsd_docs) for the full code example.
 
 1. Like with [Hacker News](#hacker-news), import the default export from `internetdata` as well as [zod](https://zod.dev/).
 
