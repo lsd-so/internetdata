@@ -34,7 +34,8 @@ $ yarn add internetdata
 
 Shown below are the necessary pieces for getting started after [installing](#installation). The guide also assumes you've created an [API key](https://lsd.so/docs/database/connect/authenticating).
 
-**Note:** You must use either the API key provided to the [local browser](https://lsd.so/bicycle) after logging in or create one on your profile after you've logged into the browser. This is so we're able to correlate the correct browser to be facilitating instructions on.
+**Note:** You must use either the API key provided to the [local browser](https://lsd.so/bicycle) after logging in or create one on your profile after you've logged into the browser. This is so we're able to correlate the correct browser to be facilitating instructions on. If you're still running into problems, feel free to schedule a [call](https://cal.com/yev-barkalov-m19qqp/).
+).
 
 ### Hacker News
 
