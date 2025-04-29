@@ -226,7 +226,7 @@ If you were to request data through a cloud browser and _then_ attempt to codege
 
 There are a variety of reasons why you'd be interested in working with a local browser however this can be best understood as covering that "last mile" of web scraping thanks to the [LSD language](https://lsd.so/docs/database/language) being accomodating of both headless cloud browsers as well as [our own local "Bicycle" browser](https://lsd.so/bicycle).
 
-After you've downloaded and logged in with the same account you created an API key for, all that's needed is to indicate you're interested in tripping `.on()` the `"BROWSER"`.
+After you've downloaded and logged in to the local browser, either copy the credentials offered or then go to your profile (for the same Gmail) and create an API key. All that's needed left is to indicate you're interested in tripping `.on()` the `"BROWSER"`.
 
 ### Google
 
