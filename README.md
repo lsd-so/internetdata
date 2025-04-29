@@ -28,9 +28,11 @@ $ yarn add internetdata
 - [Imitating a trip](#imitating-a-trip)
 - [How much does this cost?](#how-much-does-this-cost)
 
+**Important:** See the [`examples/`](https://github.com/lsd-so/internetdata/tree/main/examples) folder for complete code examples.
+
 ## Quickstart
 
-See the [`examples/`](https://github.com/lsd-so/internetdata/tree/main/examples) folder for complete code examples but shown below are the necessary pieces for getting started after [installing](#installation). The guide also assumes you've created an [API key](https://lsd.so/docs/database/connect/authenticating).
+Shown below are the necessary pieces for getting started after [installing](#installation). The guide also assumes you've created an [API key](https://lsd.so/docs/database/connect/authenticating).
 
 ### Hacker News
 
@@ -219,9 +221,9 @@ If you were to request data through a cloud browser and _then_ attempt to codege
 
 ## Working with the local browser
 
-There are a variety of reasons why you'd be interested in working with a local browser however this can be best understood as covering that "last mile" of web scraping thanks to the [LSD language](https://lsd.so/docs/database/language) being accomodating of both headless cloud browsers as well as [our own](https://lsd.so/bicycle).
+There are a variety of reasons why you'd be interested in working with a local browser however this can be best understood as covering that "last mile" of web scraping thanks to the [LSD language](https://lsd.so/docs/database/language) being accomodating of both headless cloud browsers as well as [our own local "Bicycle" browser](https://lsd.so/bicycle).
 
-All that's needed is to indicate you're interested in tripping `.on()` the `"BROWSER"`.
+After you've downloaded and logged in with the same account you created an API key for, all that's needed is to indicate you're interested in tripping `.on()` the `"BROWSER"`.
 
 ### Google
 
