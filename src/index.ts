@@ -59,11 +59,13 @@ export type Target = "BROWSER" | "TRAVERSER";
 export enum Operation {
   ACCORDING = "ACCORDING",
   CLICK = "CLICK",
+  DIVE = "DIVE",
   ENTER = "ENTER",
   FROM = "FROM",
   GROUP = "GROUP",
   SELECT = "SELECT",
   TARGET = "TARGET",
+  WHEN = "WHEN",
 }
 
 export const StringOp = (o: Operation): String => {
@@ -72,6 +74,8 @@ export const StringOp = (o: Operation): String => {
       return "ACCORDING";
     case Operation.CLICK:
       return "CLICK";
+    case Operation.DIVE:
+      return "DIVE";
     case Operation.ENTER:
       return "ENTER";
     case Operation.FROM:
@@ -82,6 +86,8 @@ export const StringOp = (o: Operation): String => {
       return "SELECT";
     case Operation.TARGET:
       return "TARGET";
+    case Operation.WHEN:
+      return "WHEN";
   }
 };
 
@@ -100,6 +106,9 @@ export interface Instruction {
   operation: Operation;
   args?: Array<String>;
   aliasedArgs?: Array<AliasArgument>;
+  conditionalArgs?: Array<String>;
+  thenFlow?: Array<String>;
+  elseFlow?: Array<String>;
 }
 
 export const StringInstruction = (i: Instruction): String => {
@@ -108,6 +117,8 @@ export const StringInstruction = (i: Instruction): String => {
       return `${StringOp(i.operation)} TO ${i.args?.join(" ") ?? "yev/hn"}`;
     case Operation.CLICK:
       return `${StringOp(i.operation)} ON ${i.args?.join(" ") ?? "a"}`;
+    case Operation.DIVE:
+      return `${StringOp(i.operation)} INTO ${i.args?.join(" ") ?? "invalid"}`;
     case Operation.ENTER:
       return `${StringOp(i.operation)} INTO ${i.args?.join(" ") ?? 'input "text"'}`;
     case Operation.FROM:
@@ -118,6 +129,8 @@ export const StringInstruction = (i: Instruction): String => {
       return `${StringOp(i.operation)} ${[...(i.args || []), ...(i.aliasedArgs || []).map((aliasedArg) => (aliasedArg.alias ? aliasedArg.selecting + " AS " + aliasedArg.alias : aliasedArg.selecting))].join(", ")}`;
     case Operation.TARGET:
       return `${StringOp(i.operation)} <| ${i.args?.join(" ") ?? "TRAVERSER"} |`;
+    case Operation.WHEN:
+      return `${StringOp(i.operation)} <| ${i.conditionalArgs?.join(" ") ?? "1 = 1"}${i.thenFlow ? " THEN " + i.thenFlow.join(" ") : ""}${i.elseFlow ? " ELSE " + i.elseFlow.join(" ") : ""}`;
   }
 };
 
@@ -139,11 +152,13 @@ export class Trip {
     this.navigate = this.navigate.bind(this);
     this.click = this.click.bind(this);
     this.enter = this.enter.bind(this);
+    this.dive = this.dive.bind(this);
     this.imitate = this.imitate.bind(this);
     this.group = this.group.bind(this);
     this.on = this.on.bind(this);
     this.select = this.select.bind(this);
     this.extrapolate = this.extrapolate.bind(this);
+    this.when = this.when.bind(this);
   }
 
   navigate(destination: String): Trip {
@@ -159,6 +174,15 @@ export class Trip {
     this.components.push({
       operation: Operation.CLICK,
       args: [selector],
+    });
+
+    return this;
+  }
+
+  dive(target: String): Trip {
+    this.components.push({
+      operation: Operation.DIVE,
+      args: [target],
     });
 
     return this;
@@ -233,6 +257,15 @@ export class Trip {
     const results = await conn.unsafe(assembledQuery);
 
     return schema.parse(results) as z.infer<T>;
+  }
+
+  when(condition: String, thenFlow: String, elseFlow?: String) {
+    this.components.push({
+      operation: Operation.WHEN,
+      conditionalArgs: [condition],
+      thenFlow: thenFlow ? [thenFlow] : [],
+      elseFlow: elseFlow ? [elseFlow] : [],
+    });
   }
 }
 
