@@ -38,6 +38,8 @@ $ yarn add internetdata
 
 When authenticating to LSD, what you're connecting to is our [postgres compatible database](https://lsd.so/docs/database/postgres/postgres-compatible) hence using the terms "user" and "password".
 
+The values below refer to your email and [API key](https://lsd.so/docs/database/connect/authenticating), which you can obtain from [your profile](https://lsd.so/profile).
+
 ### Configuration object
 
 When calling `drop.tab()`, you can provide a [`ConnectionConfiguration` object](https://github.com/lsd-so/internetdata/blob/main/src/index.ts#L8) with two properties `user` and `password`.
