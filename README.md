@@ -18,6 +18,10 @@ $ yarn add internetdata
 
 ## Contents
 
+- [Authenticating](#authenticating)
+  - [Configuration object](#configuration-object)
+  - [Configuration file](#configuration-file)
+  - [Environment variables](#environment-variables)
 - [Quickstart](#quickstart)
   - [Hacker News](#hacker-news)
   - [Interacting with LSD docs](#interacting-with-lsd-docs)
@@ -30,12 +34,65 @@ $ yarn add internetdata
 
 **Important:** See the [`examples/`](https://github.com/lsd-so/internetdata/tree/main/examples) folder for complete code examples.
 
+## Authenticating
+
+When authenticating to LSD, what you're connecting to is our [postgres compatible database](https://lsd.so/docs/database/postgres/postgres-compatible) hence using the terms "user" and "password".
+
+### Configuration object
+
+When calling `drop.tab()`, you can provide a [`ConnectionConfiguration` object](https://github.com/lsd-so/internetdata/blob/main/src/index.ts#L8) with two properties `user` and `password`.
+
+```typescript
+const trip = drop.tab({
+  user: "<you@email.domain>",
+  password: "<api_key>",
+});
+```
+
+### Configuration file
+
+An alternative method for authenticating is by writing to an `.lsd` file in your home directory containing a JSON with the properties `user` and `password`.
+
+```JSON
+{
+  "user": "<you@email.domain>",
+  "password": "<api_key>"
+}
+```
+
+If you authenticate this way, you can exclude the connection configuration when calling `drop.tab()`.
+
+```typescript
+const trip = drop.tab();
+```
+
+### Environment variables
+
+An alternative method for authenticating is by setting the `LSD_USER` and `LSD_PASSWORD` environment variables.
+
+```bash
+$ export LSD_USER='<you@email.domain>'
+$ export LSD_PASSWORD='<api_key>'
+```
+
+If you authenticate this way, you can exclude the connection configuration when calling `drop.tab()`.
+
+```typescript
+const trip = drop.tab();
+```
+
+**Note:** If you're running into difficulties when using this approach, check the environment variables were properly set in the terminal or application you're attemping to run from.
+
+```bash
+$ echo $LSD_USER
+$ echo $LSD_PASSWORD
+```
+
 ## Quickstart
 
 Shown below are the necessary pieces for getting started after [installing](#installation). The guide also assumes you've created an [API key](https://lsd.so/docs/database/connect/authenticating).
 
 **Note:** You must use either the API key provided to the [local browser](https://lsd.so/bicycle) after logging in or create one on your profile after you've logged into the browser. This is so we're able to correlate the correct browser to be facilitating instructions on. If you're still running into problems, feel free to schedule a [call](https://cal.com/yev-barkalov-m19qqp/).
-).
 
 ### Hacker News
 
