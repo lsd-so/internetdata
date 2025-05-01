@@ -212,6 +212,7 @@ export class Trip {
     this.group = this.group.bind(this);
     this.on = this.on.bind(this);
     this.select = this.select.bind(this);
+    this.execute = this.execute.bind(this);
     this.extrapolate = this.extrapolate.bind(this);
     this.when = this.when.bind(this);
   }
@@ -291,6 +292,12 @@ export class Trip {
     });
 
     return this;
+  }
+
+  async execute(code: string): Promise<Array<Record<string, any>>> {
+    const conn = await this.connection.establishConnection();
+    const results = await conn.unsafe(code);
+    return results;
   }
 
   async extrapolate<T extends z.ZodTypeAny>(schema: T): Promise<T> {
