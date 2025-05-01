@@ -27,7 +27,7 @@ const getUserTouse = (connectionConfiguration?: ConnectionConfiguration): String
     const asObject = z.object({
       user: z.string(),
       password: z.string(),
-    }).parse(content);
+    }).parse(JSON.parse(content));
     if (asObject.user) {
       return asObject.user;
     }
@@ -53,7 +53,7 @@ const getPasswordToUse = (connectionConfiguration?: ConnectionConfiguration): St
     const asObject = z.object({
       user: z.string(),
       password: z.string(),
-    }).parse(content);
+    }).parse(JSON.parse(content));
     if (asObject.password) {
       return asObject.password;
     }
