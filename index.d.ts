@@ -27,6 +27,7 @@ declare module "internetdata" {
     on: (target: String) => Trip;
     select: (selecting: String, alias?: String) => Trip;
     extrapolate: <T extends z.ZodTypeAny>(schema: T) => Promise<T>;
+    execute: (code: string) => Promise<Array<Record<string, any>>>;
   }
 
   export function tab(
@@ -49,6 +50,7 @@ export class Trip {
   on: (target: String) => Trip;
   select: (selecting: String, alias?: String) => Trip;
   extrapolate: <T extends z.ZodTypeAny>(schema: T) => Promise<T>;
+  execute: (code: string) => Promise<Array<Record<string, any>>>;
 }
 declare const module: {
   tab(connectionConfiguration?: ConnectionConfiguration): Promise<Trip>;
