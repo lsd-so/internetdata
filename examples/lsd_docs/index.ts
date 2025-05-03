@@ -18,7 +18,7 @@ const run = async () => {
     .select("title")
     .extrapolate<typeof docsSchema>(docsSchema);
 
-  console.log("What is the tile of the database docs page?");
+  console.log("What is the title of the database docs page?");
   console.log(docsTitle);
 };
 
