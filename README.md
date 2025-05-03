@@ -116,7 +116,7 @@ const trip = await drop.tab(); // Promise<Trip>
 **Note:** The code snippet above assumes you've saved the username and API key to the `LSD_USER` and `LSD_PASSWORD` environment variables respectively. If you'd like to pass in a connection configuration object you can do so like below:
 
 ```typescript
-const lsd = await drop.tab({
+const trip = await drop.tab({
   user: "your@email.com",
   password: "<api key>",
 }); // Promise<Trip>
