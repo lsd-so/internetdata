@@ -1,23 +1,30 @@
 # internetdata
 
+![NPM Version](https://img.shields.io/npm/v/internetdata)
+
 ![TypeScript logo but with blotter paper as the background](https://pub-662d5a25493347a99b839351ec266583.r2.dev/ts-blotter.png)
 
-## Installation
+## Quickstart
 
-Want internet data in your TypeScript application? Just install it with npm.
-
-```bash
-$ npm i internetdata
-```
-
-Or add it with yarn.
+Use the [create-your-internet](https://github.com/lsd-so/create-your-internet/) package to conveniently scaffold out a new application using this package.
 
 ```bash
-$ yarn add internetdata
+$ yarn create your-internet
 ```
+
+Or, if you prefer `npm`.
+
+```bash
+$ npm create your-internet
+```
+
+## Issues/Contributing
+
+Feel free to [file an issue](https://github.com/lsd-so/internetdata/issues/new/choose) or [submit a PR](https://github.com/lsd-so/internetdata/compare). More will be added to this SDK over time.
 
 ## Contents
 
+- [Installation](#installation)
 - [Authenticating](#authenticating)
   - [Configuration object](#configuration-object)
   - [Configuration file](#configuration-file)
@@ -33,6 +40,20 @@ $ yarn add internetdata
 - [How much does this cost?](#how-much-does-this-cost)
 
 **Important:** See the [`examples/`](https://github.com/lsd-so/internetdata/tree/main/examples) folder for complete code examples.
+
+## Installation
+
+Want internet data in your TypeScript application? Just install it with npm.
+
+```bash
+$ npm i internetdata
+```
+
+Or add it with yarn.
+
+```bash
+$ yarn add internetdata
+```
 
 ## Authenticating
 
