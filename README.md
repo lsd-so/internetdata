@@ -1,12 +1,12 @@
 # internetdata
 
-![NPM Version](https://img.shields.io/npm/v/internetdata)
+[![NPM Version](https://img.shields.io/npm/v/internetdata)](https://www.npmjs.com/package/internetdata)
 
 ![TypeScript logo but with blotter paper as the background](https://pub-662d5a25493347a99b839351ec266583.r2.dev/ts-blotter.png)
 
 ## Quickstart
 
-Use the [create-your-internet](https://github.com/lsd-so/create-your-internet/) package to conveniently scaffold out a new application using this package.
+Use the [create-your-internet](https://www.npmjs.com/package/create-your-internet) package to conveniently scaffold out a new application using this package.
 
 ```bash
 $ yarn create your-internet
