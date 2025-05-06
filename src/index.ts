@@ -1,6 +1,6 @@
-import { existsSync, readFileSync } from 'fs';
-import { join } from 'path';
-import os from 'os';
+import { existsSync, readFileSync } from "fs";
+import { join } from "path";
+import os from "os";
 
 import postgres from "postgres";
 import { z } from "zod";
@@ -10,57 +10,65 @@ export interface ConnectionConfiguration {
   password: String;
 }
 
-const getUserTouse = (connectionConfiguration?: ConnectionConfiguration): String => {
+const getUserTouse = (
+  connectionConfiguration?: ConnectionConfiguration,
+): String => {
   const userFromConfigurationObject = connectionConfiguration?.user;
   if (userFromConfigurationObject) {
-    return userFromConfigurationObject
+    return userFromConfigurationObject;
   }
 
   const userFromEnvVar = process.env.LSD_USER;
   if (userFromEnvVar) {
-    return userFromEnvVar
+    return userFromEnvVar;
   }
 
-  const lsdConfigExists = existsSync(join(os.homedir(), '.lsd'));
+  const lsdConfigExists = existsSync(join(os.homedir(), ".lsd"));
   if (lsdConfigExists) {
-    const content = readFileSync(join(os.homedir(), '.lsd'), 'utf-8');
-    const asObject = z.object({
-      user: z.string(),
-      password: z.string(),
-    }).parse(JSON.parse(content));
+    const content = readFileSync(join(os.homedir(), ".lsd"), "utf-8");
+    const asObject = z
+      .object({
+        user: z.string(),
+        password: z.string(),
+      })
+      .parse(JSON.parse(content));
     if (asObject.user) {
       return asObject.user;
     }
   }
 
   return "";
-}
+};
 
-const getPasswordToUse = (connectionConfiguration?: ConnectionConfiguration): String => {
-  const passwordFromConfiguration = connectionConfiguration?.password
+const getPasswordToUse = (
+  connectionConfiguration?: ConnectionConfiguration,
+): String => {
+  const passwordFromConfiguration = connectionConfiguration?.password;
   if (passwordFromConfiguration) {
-    return passwordFromConfiguration
+    return passwordFromConfiguration;
   }
 
-  const passwordFromEnvVar = process.env.LSD_PASSWORD
+  const passwordFromEnvVar = process.env.LSD_PASSWORD;
   if (passwordFromEnvVar) {
-    return passwordFromEnvVar
-  };
+    return passwordFromEnvVar;
+  }
 
-  const lsdConfigExists = existsSync(join(os.homedir(), '.lsd'));
+  const lsdConfigExists = existsSync(join(os.homedir(), ".lsd"));
   if (lsdConfigExists) {
-    const content = readFileSync(join(os.homedir(), '.lsd'), 'utf-8');
-    const asObject = z.object({
-      user: z.string(),
-      password: z.string(),
-    }).parse(JSON.parse(content));
+    const content = readFileSync(join(os.homedir(), ".lsd"), "utf-8");
+    const asObject = z
+      .object({
+        user: z.string(),
+        password: z.string(),
+      })
+      .parse(JSON.parse(content));
     if (asObject.password) {
       return asObject.password;
     }
   }
 
   return "";
-}
+};
 
 // LSDConnection abstracts the postgres connection in case there's a need to retry connecting in the middle of a run
 export class Connection {
