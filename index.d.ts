@@ -15,7 +15,7 @@ declare module "internetdata" {
     connection: Connection;
 
     navigate: (destination: String) => Trip;
-    click: (selector: String) => Trip;
+    click: (selector: String, times?: number) => Trip;
     dive: (target: String) => Trip;
     enter: (selector: String, textToEnter: String) => Trip;
     imitate: (skillIdentifier: String) => Trip;

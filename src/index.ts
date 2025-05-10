@@ -234,11 +234,22 @@ export class Trip {
     return this;
   }
 
-  click(selector: String): Trip {
-    this.components.push({
-      operation: Operation.CLICK,
-      args: [selector],
-    });
+  click(selector: String, times?: number): Trip {
+    if (times !== undefined) {
+      let counter = 0;
+      while (counter < times) {
+        this.components.push({
+          operation: Operation.CLICK,
+          args: [selector],
+        });
+        counter += 1;
+      }
+    } else {
+      this.components.push({
+        operation: Operation.CLICK,
+        args: [selector],
+      });
+    }
 
     return this;
   }
