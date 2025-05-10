@@ -27,7 +27,7 @@ declare module "internetdata" {
 
   const defaultExport: {
     tab: (connectionConfiguration?: ConnectionConfiguration) => Promise<Trip>;
-  }
+  };
 
   export = defaultExport;
 }

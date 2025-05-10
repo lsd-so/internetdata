@@ -81,10 +81,10 @@ diff@^4.0.1:
   resolved "https://registry.yarnpkg.com/diff/-/diff-4.0.2.tgz#60f3aecb89d5fae520c11aa19efc2bb982aade7d"
   integrity sha512-58lmxKSA4BNyLz+HHMUzlOEpg09FV+ev6ZMe3vJihgdxzgcwZ8VoEEPmALCZG9LmqfVoNMMKpttIYTVG6uDY7A==
 
-internetdata@^1.1.17:
-  version "1.1.17"
-  resolved "https://registry.yarnpkg.com/internetdata/-/internetdata-1.1.17.tgz#b4ce05fc234dd8e6aa09cb099d9985f8092c9beb"
-  integrity sha512-0cZvFaWdlQGSSvXvdnx1nlKBsLl2Nb6wENHcRdsC62V1RMAvfQ77J8wlPPE6hISLtRiZ9ul7ldaz9KBgZTQb5Q==
+internetdata@1.1.18:
+  version "1.1.18"
+  resolved "https://registry.yarnpkg.com/internetdata/-/internetdata-1.1.18.tgz#46f7c878d09c88fe86321952babd99b3c492f88e"
+  integrity sha512-Y7wLMa3y9EgKMetlrGu1BzcTfazxN+VcPl/lS3/v40bJbxbwZ8IXES/nEozNFMYgkpE0YESNQflEZiJzjSPn+g==
   dependencies:
     "@types/node" "^22.15.2"
     postgres "^3.4.5"

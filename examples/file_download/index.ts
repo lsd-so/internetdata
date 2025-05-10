@@ -12,10 +12,10 @@ const run = async () => {
 
   const download = await trip
     // If you have the Bicycle installed you can control a browser locally https://lsd.so/bicycle
-    // .on('BROWSER')
-    .navigate('https://lsd.so/dummy_download')
+    // .on('TRAVERSER')
+    .navigate("https://lsd.so/dummy_download")
     .click("#download")
-    .select('FILE', "text_file")
+    .select("FILE", "text_file")
     .extrapolate<typeof downloadSchema>(downloadSchema);
 
   console.log("What is the result of the download?");
