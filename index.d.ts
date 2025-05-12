@@ -80,6 +80,12 @@ declare module "internetdata" {
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     on: (target: String) => Trip;
+    /**
+     * Selects specific elements or data from the current page. Attempts to grab first from within the repeating container, than checks the container itself, then attempts to retrieve from the page itself.
+     * @param {String} selecting - CSS selector or expression for the values to select.
+     * @param {String} [alias] - Optional alias to assign to the selected data for reference in results.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
     select: (selecting: String, alias?: String) => Trip;
     extrapolate: <T extends z.ZodTypeAny>(schema: T) => Promise<T>;
     when: (condition: String, thenFlow: String, elseFlow?: String) => Trip;
