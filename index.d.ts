@@ -40,6 +40,12 @@ declare module "internetdata" {
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     navigate: (destination: String) => Trip;
+    /**
+     * Clicks on an element matching the specified selector.
+     * @param {String} selector - CSS selector for the element to click.
+     * @param {number} [times] - Optional number of times to click the element. Defaults to 1 if not specified.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
     click: (selector: String, times?: number) => Trip;
     dive: (target: String) => Trip;
     enter: (selector: String, textToEnter: String) => Trip;
