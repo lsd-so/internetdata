@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+/**
+ * The module in which this SDK is defined
+ * @module internetdata
+ */
 declare module "internetdata" {
   export interface ConnectionConfiguration {
     user: String;
@@ -23,6 +27,7 @@ declare module "internetdata" {
     on: (target: String) => Trip;
     select: (selecting: String, alias?: String) => Trip;
     extrapolate: <T extends z.ZodTypeAny>(schema: T) => Promise<T>;
+    when: (condition: String, thenFlow: String, elseFlow?: String) => Trip;
   }
 
   const defaultExport: {

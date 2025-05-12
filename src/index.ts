@@ -340,13 +340,15 @@ export class Trip {
     return schema.parse(results) as z.infer<T>;
   }
 
-  when(condition: String, thenFlow: String, elseFlow?: String) {
+  when(condition: String, thenFlow: String, elseFlow?: String): Trip {
     this.components.push({
       operation: Operation.WHEN,
       conditionalArgs: [condition],
       thenFlow: thenFlow ? [thenFlow] : [],
       elseFlow: elseFlow ? [elseFlow] : [],
     });
+
+    return this;
   }
 }
 
