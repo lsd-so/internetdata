@@ -34,6 +34,11 @@ declare module "internetdata" {
   export class Trip {
     connection: Connection;
 
+    /**
+     * Navigates to a specified URL.
+     * @param {String} destination - The URL to navigate to.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
     navigate: (destination: String) => Trip;
     click: (selector: String, times?: number) => Trip;
     dive: (target: String) => Trip;
