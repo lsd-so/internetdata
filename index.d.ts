@@ -54,6 +54,12 @@ declare module "internetdata" {
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     dive: (target: String) => Trip;
+    /**
+     * Enters text into an input field matching the specified selector.
+     * @param {String} selector - CSS selector for the input element.
+     * @param {String} textToEnter - The text to enter into the input field.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
     enter: (selector: String, textToEnter: String) => Trip;
     imitate: (skillIdentifier: String) => Trip;
     group: (groupingBy: String) => Trip;
