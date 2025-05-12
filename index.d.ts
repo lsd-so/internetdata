@@ -87,7 +87,19 @@ declare module "internetdata" {
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     select: (selecting: String, alias?: String) => Trip;
+    /**
+     * Executes the trip and parses the results according to the provided schema.
+     * @param {T extends z.ZodTypeAny} schema - Zod schema to validate and parse the results.
+     * @returns {Promise<T>} - Returns a promise that resolves to the parsed data matching the schema.
+     */
     extrapolate: <T extends z.ZodTypeAny>(schema: T) => Promise<T>;
+    /**
+     * Conditionally executes different flows based on a specified condition.
+     * @param {String} condition - The condition to evaluate.
+     * @param {String} thenFlow - The flow to execute if the condition is true.
+     * @param {String} [elseFlow] - Optional flow to execute if the condition is false.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
     when: (condition: String, thenFlow: String, elseFlow?: String) => Trip;
   }
 
