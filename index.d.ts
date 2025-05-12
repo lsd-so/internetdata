@@ -103,6 +103,13 @@ declare module "internetdata" {
     when: (condition: String, thenFlow: String, elseFlow?: String) => Trip;
   }
 
+  /**
+   * Default export providing the main entry point to the LSD service.
+   * @property {Function} tab - Drop a tab to start a new web browsing Trip.
+   *                            Just like the real thing, dropping a tab returns a Promise for a Trip.
+   * @param {ConnectionConfiguration} [connectionConfiguration] - Optional configuration for the connection.
+   * @returns {Promise<Trip>} - Returns a promise that resolves to a new Trip instance.
+   */
   const defaultExport: {
     tab: (connectionConfiguration?: ConnectionConfiguration) => Promise<Trip>;
   };
