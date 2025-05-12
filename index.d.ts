@@ -68,7 +68,17 @@ declare module "internetdata" {
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     imitate: (skillIdentifier: String) => Trip;
+    /**
+     * Groups results by a repeating container (defining what delineates rows)
+     * @param {String} groupingBy - Selector or attribute to group results by.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
     group: (groupingBy: String) => Trip;
+    /**
+     * Specifies the target environment for executing the trip.
+     * @param {String} target - The target environment ("BROWSER" for local browser or "TRAVERSER" for cloud browser).
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
     on: (target: String) => Trip;
     select: (selecting: String, alias?: String) => Trip;
     extrapolate: <T extends z.ZodTypeAny>(schema: T) => Promise<T>;
