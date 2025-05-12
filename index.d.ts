@@ -47,6 +47,12 @@ declare module "internetdata" {
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     click: (selector: String, times?: number) => Trip;
+    /**
+     * Navigates into a specific link or set of links from the current page to proceed with remaining instructions.
+     * May be done in parallel with cloud browsers or in sequence on a local browser
+     * @param {String} target - Selector or identifier for the variable/element to dive into.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
     dive: (target: String) => Trip;
     enter: (selector: String, textToEnter: String) => Trip;
     imitate: (skillIdentifier: String) => Trip;
