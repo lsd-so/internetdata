@@ -61,6 +61,12 @@ declare module "internetdata" {
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     enter: (selector: String, textToEnter: String) => Trip;
+    /**
+     * Applies a predefined skill or behavior pattern to the current browsing session.
+     * This imports a published LSD program (think like npm/javascript but for a web interaction language)
+     * @param {String} skillIdentifier - Identifier for the LSD trip to import.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
     imitate: (skillIdentifier: String) => Trip;
     group: (groupingBy: String) => Trip;
     on: (target: String) => Trip;
