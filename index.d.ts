@@ -26,6 +26,11 @@ declare module "internetdata" {
     connectionConfiguration: ConnectionConfiguration;
   }
 
+  /**
+   * Represents a browsing session or "trip" through web content.
+   * Provides methods for navigation, interaction, and data extraction.
+   * @property {Connection} connection - The connection to the LSD service.
+   */
   export class Trip {
     connection: Connection;
 
