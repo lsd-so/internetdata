@@ -5,6 +5,11 @@ import { z } from "zod";
  * @module internetdata
  */
 declare module "internetdata" {
+  /**
+   * Configuration for establishing a connection to the LSD service.
+   * @property {String} user - The username for authentication. Can be provided via LSD_USER environment variable or .lsd config file.
+   * @property {String} password - The password for authentication. Can be provided via LSD_PASSWORD environment variable or .lsd config file.
+   */
   export interface ConnectionConfiguration {
     user: String;
     password: String;
