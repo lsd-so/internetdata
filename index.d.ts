@@ -15,6 +15,12 @@ declare module "internetdata" {
     password: String;
   }
 
+  /**
+   * Manages the connection to the LSD service.
+   * Handles authentication and maintains the database connection.
+   * @property {String} host - The hostname of the LSD service.
+   * @property {ConnectionConfiguration} connectionConfiguration - The configuration used for authentication.
+   */
   export class Connection {
     host: String;
     connectionConfiguration: ConnectionConfiguration;
