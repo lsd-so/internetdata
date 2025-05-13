@@ -54,6 +54,15 @@ declare module "internetdata" {
     assign: (name: String, value: String) => Trip;
 
     /**
+     * Associates a name with a function body that takes no arguments.
+     * This is a convenience shorthand for define() when creating functions that don't require parameters.
+     * @param {String} name - The name of the function to associate.
+     * @param {Function} [body] - Optional function that takes a Trip and returns a modified Trip, defining the function's behavior.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
+    associate: (name: String, body?: (trip: Trip) => Trip) => Trip;
+
+    /**
      * Clicks on an element matching the specified selector.
      * @param {String} selector - CSS selector for the element to click.
      * @param {number} [times] - Optional number of times to click the element. Defaults to 1 if not specified.
