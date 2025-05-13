@@ -5,7 +5,7 @@
   "types": "dist/index.d.ts",
   "license": "MIT",
   "scripts": {
-    "build": "tsc"
+    "build": "tsc --project tsconfig.json"
   },
   "dependencies": {
     "@types/node": "^22.15.2",

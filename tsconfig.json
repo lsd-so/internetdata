@@ -1,26 +1,20 @@
 {
   "compilerOptions": {
     "target": "es2022",
-    "module": "commonjs",
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
     "sourceMap": true,
     "declaration": true,
     "baseUrl": ".",
-    "paths": {
-      "@argument": ["src/argument.ts"],
-      "@connection": ["src/connection.ts"],
-      "@instruction": ["src/instruction.ts"],
-      "@operation": ["src/operation.ts"],
-      "@target": ["src/target.ts"],
-      "@trip": ["src/trip.ts"]
-    }
+    "moduleResolution": "node"
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "**/*.d.ts", "*.d.ts"]
+  "exclude": ["node_modules", "dist", "**/*.d.ts", "*.d.ts"],
+  "tsc-alias": {
+    "resolveFullPaths": true
+  }
 }
