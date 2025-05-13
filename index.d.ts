@@ -39,8 +39,18 @@ declare module "internetdata" {
   export class Trip {
     connection: Connection;
 
+    /**
+     * Assembles the LSD query string based on all the actions and selections that have been called on this Trip.
+     * @returns {string} - Returns the complete LSD query string ready for execution.
+     */
     assembleQuery: () => string;
 
+    /**
+     * Assigns a value to a variable in the LSD language.
+     * @param {String} name - The name of the variable to assign to.
+     * @param {String} value - The value to assign to the variable.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
     assign: (name: String, value: String) => Trip;
 
     /**
@@ -51,6 +61,13 @@ declare module "internetdata" {
      */
     click: (selector: String, times?: number) => Trip;
 
+    /**
+     * Defines a custom function in the LSD language that can be reused throughout the trip.
+     * @param {String} name - The name of the function to define.
+     * @param {Array<AliasArgument>} [args] - Optional array of arguments the function accepts.
+     * @param {Function} [body] - Optional function that takes a Trip and returns a modified Trip, defining the function's behavior.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
     define: (
       name: String,
       args?: Array<AliasArgument>,
@@ -73,6 +90,13 @@ declare module "internetdata" {
      */
     enter: (selector: String, textToEnter: String) => Trip;
 
+    /**
+     * Executes a raw LSD query string directly.
+     * This method allows running custom LSD code, which is a specialized language for web extraction and interaction.
+     * Use with caution as it bypasses the structured API and type safety.
+     * @param {string} code - The raw LSD query string to execute.
+     * @returns {Promise<Array<Record<string, any>>>} - Returns a promise that resolves to the query results as an array of records.
+     */
     execute: (code: string) => Promise<Array<Record<string, any>>>;
 
     /**
