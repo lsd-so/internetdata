@@ -158,12 +158,24 @@ export class Trip {
     return schema.parse(results) as z.infer<T>;
   }
 
-  when(condition: String, thenFlow: String, elseFlow?: String): Trip {
+  when(
+    condition: String,
+    thenFlow: (trip: Trip) => Trip,
+    elseFlow?: (trip: Trip) => Trip,
+  ): Trip {
+    const thenTrip = new Trip(new Connection());
+    const thenOutcome = thenFlow(thenTrip);
+    const thenDefinition = thenOutcome?.assembleQuery() ?? "";
+
+    const elseTrip = new Trip(new Connection());
+    const elseOutcome = elseFlow?.(elseTrip) ?? undefined;
+    const elseDefinition = elseOutcome?.assembleQuery() ?? "";
+
     this.components.push({
       operation: Operation.WHEN,
       conditionalArgs: [condition],
-      thenFlow: thenFlow ? [thenFlow] : [],
-      elseFlow: elseFlow ? [elseFlow] : [],
+      thenFlow: thenDefinition ? [thenDefinition] : [],
+      elseFlow: elseDefinition ? [elseDefinition] : [],
     });
 
     return this;
