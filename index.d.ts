@@ -26,6 +26,11 @@ declare module "internetdata" {
     connectionConfiguration: ConnectionConfiguration;
   }
 
+  export interface AliasArgument {
+    selecting: String;
+    alias?: String;
+  }
+
   /**
    * Represents a browsing session or "trip" through web content.
    * Provides methods for navigation, interaction, and data extraction.
@@ -34,12 +39,10 @@ declare module "internetdata" {
   export class Trip {
     connection: Connection;
 
-    /**
-     * Navigates to a specified URL.
-     * @param {String} destination - The URL to navigate to.
-     * @returns {Trip} - Returns the Trip instance for method chaining.
-     */
-    navigate: (destination: String) => Trip;
+    assembleQuery: () => string;
+
+    assign: (name: String, value: String) => Trip;
+
     /**
      * Clicks on an element matching the specified selector.
      * @param {String} selector - CSS selector for the element to click.
@@ -47,6 +50,13 @@ declare module "internetdata" {
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     click: (selector: String, times?: number) => Trip;
+
+    define: (
+      name: String,
+      args?: Array<AliasArgument>,
+      body?: (trip: Trip) => Trip,
+    ) => Trip;
+
     /**
      * Navigates into a specific link or set of links from the current page to proceed with remaining instructions.
      * May be done in parallel with cloud browsers or in sequence on a local browser
@@ -54,6 +64,7 @@ declare module "internetdata" {
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     dive: (target: String) => Trip;
+
     /**
      * Enters text into an input field matching the specified selector.
      * @param {String} selector - CSS selector for the input element.
@@ -61,6 +72,23 @@ declare module "internetdata" {
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     enter: (selector: String, textToEnter: String) => Trip;
+
+    execute: (code: string) => Promise<Array<Record<string, any>>>;
+
+    /**
+     * Executes the trip and parses the results according to the provided schema.
+     * @param {T extends z.ZodTypeAny} schema - Zod schema to validate and parse the results.
+     * @returns {Promise<T>} - Returns a promise that resolves to the parsed data matching the schema.
+     */
+    extrapolate: <T extends z.ZodTypeAny>(schema: T) => Promise<T>;
+
+    /**
+     * Groups results by a repeating container (defining what delineates rows)
+     * @param {String} groupingBy - Selector or attribute to group results by.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
+    group: (groupingBy: String) => Trip;
+
     /**
      * Applies a predefined skill or behavior pattern to the current browsing session.
      * This imports a published LSD program (think like npm/javascript but for a web interaction language)
@@ -68,12 +96,14 @@ declare module "internetdata" {
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     imitate: (skillIdentifier: String) => Trip;
+
     /**
-     * Groups results by a repeating container (defining what delineates rows)
-     * @param {String} groupingBy - Selector or attribute to group results by.
+     * Navigates to a specified URL.
+     * @param {String} destination - The URL to navigate to.
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
-    group: (groupingBy: String) => Trip;
+    navigate: (destination: String) => Trip;
+
     /**
      * Specifies the target environment for executing the trip.
      * @param {String} target - The target environment ("BROWSER" for local browser or "TRAVERSER" for cloud browser).
@@ -87,12 +117,7 @@ declare module "internetdata" {
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     select: (selecting: String, alias?: String) => Trip;
-    /**
-     * Executes the trip and parses the results according to the provided schema.
-     * @param {T extends z.ZodTypeAny} schema - Zod schema to validate and parse the results.
-     * @returns {Promise<T>} - Returns a promise that resolves to the parsed data matching the schema.
-     */
-    extrapolate: <T extends z.ZodTypeAny>(schema: T) => Promise<T>;
+
     /**
      * Conditionally executes different flows based on a specified condition.
      * @param {String} condition - The condition to evaluate.
