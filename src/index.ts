@@ -121,6 +121,7 @@ export type Target = "BROWSER" | "TRAVERSER";
 
 export enum Operation {
   ACCORDING = "ACCORDING",
+  ASSIGN = "ASSIGN",
   CLICK = "CLICK",
   DIVE = "DIVE",
   ENTER = "ENTER",
@@ -135,6 +136,8 @@ export const StringOp = (o: Operation): String => {
   switch (o) {
     case Operation.ACCORDING:
       return "ACCORDING";
+    case Operation.ASSIGN:
+      return "ASSIGN";
     case Operation.CLICK:
       return "CLICK";
     case Operation.DIVE:
@@ -178,6 +181,12 @@ export const StringInstruction = (i: Instruction): String => {
   switch (i.operation) {
     case Operation.ACCORDING:
       return `${StringOp(i.operation)} TO ${i.args?.join(" ") ?? "yev/hn"}`;
+    case Operation.ASSIGN:
+      // Will have already been formatted
+      if (i.args && i.args.length > 0) {
+        return i.args[0];
+      }
+      return "";
     case Operation.CLICK:
       return `${StringOp(i.operation)} ON ${i.args?.join(" ") ?? "a"}`;
     case Operation.DIVE:
@@ -212,16 +221,19 @@ export class Trip {
     this.components = initialComponents || [];
     this.queryCache = {};
 
-    this.navigate = this.navigate.bind(this);
+    this.assembleQuery = this.assembleQuery.bind(this);
+    this.assign = this.assign.bind(this);
     this.click = this.click.bind(this);
-    this.enter = this.enter.bind(this);
+    this.define = this.define.bind(this);
     this.dive = this.dive.bind(this);
-    this.imitate = this.imitate.bind(this);
-    this.group = this.group.bind(this);
-    this.on = this.on.bind(this);
-    this.select = this.select.bind(this);
+    this.enter = this.enter.bind(this);
     this.execute = this.execute.bind(this);
     this.extrapolate = this.extrapolate.bind(this);
+    this.group = this.group.bind(this);
+    this.imitate = this.imitate.bind(this);
+    this.navigate = this.navigate.bind(this);
+    this.on = this.on.bind(this);
+    this.select = this.select.bind(this);
     this.when = this.when.bind(this);
   }
 
@@ -313,13 +325,7 @@ export class Trip {
     return this;
   }
 
-  async execute(code: string): Promise<Array<Record<string, any>>> {
-    const conn = await this.connection.establishConnection();
-    const results = await conn.unsafe(code);
-    return results;
-  }
-
-  async extrapolate<T extends z.ZodTypeAny>(schema: T): Promise<T> {
+  assembleQuery(): string {
     const assigningComponents = this.components.filter((component) =>
       OperationIsAssigning(component.operation),
     );
@@ -334,6 +340,17 @@ export class Trip {
         .map((component) => StringInstruction(component))
         .join(" |> ");
 
+    return assembledQuery;
+  }
+
+  async execute(code: string): Promise<Array<Record<string, any>>> {
+    const conn = await this.connection.establishConnection();
+    const results = await conn.unsafe(code);
+    return results;
+  }
+
+  async extrapolate<T extends z.ZodTypeAny>(schema: T): Promise<T> {
+    const assembledQuery = this.assembleQuery();
     const conn = await this.connection.establishConnection();
     const results = await conn.unsafe(assembledQuery);
 
@@ -348,6 +365,39 @@ export class Trip {
       elseFlow: elseFlow ? [elseFlow] : [],
     });
 
+    return this;
+  }
+
+  assign(name: String, value: String): Trip {
+    this.components.push({
+      operation: Operation.ASSIGN,
+      args: [`${name} <| ${value} |`],
+    });
+
+    return this;
+  }
+
+  define(
+    name: String,
+    args?: Array<AliasArgument>,
+    body?: (trip: Trip) => Trip,
+  ): Trip {
+    let functionDefinition = `${name} <|> `;
+    if (args && args.length > 0) {
+      // If there are function args provided
+      functionDefinition += args.join(" ") + " <| ";
+    }
+    functionDefinition += "\n";
+
+    const tripForDefinition = new Trip(new Connection());
+    const outcome = body?.(tripForDefinition);
+    const bodyDefinition = outcome?.assembleQuery() ?? "";
+    functionDefinition += bodyDefinition + " |";
+
+    this.components.push({
+      operation: Operation.ASSIGN,
+      args: [functionDefinition],
+    });
     return this;
   }
 }
