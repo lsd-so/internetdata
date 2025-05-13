@@ -395,7 +395,7 @@ export class Trip {
       "\n" +
       generalComponents
         .map((component) => StringInstruction(component))
-        .join(" |> ");
+        .join("\n|>\n");
 
     return assembledQuery;
   }
