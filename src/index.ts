@@ -213,7 +213,7 @@ export const StringInstruction = (i: Instruction): String => {
       return `${StringOp(i.operation)} ${i.conditionalArgs?.join(" ") ?? "1 = 1"}${i.thenFlow ? " THEN " + i.thenFlow.join(" ") : ""}${i.elseFlow && i.elseFlow.length > 0 ? " ELSE " + i.elseFlow.join(" ") : ""}`;
     case Operation.WITH:
       if (i.args) {
-        return `${StringOp(i.operation)} ${i.args[0]} ${i.args[1]}${i.args.length > 2 ? " " + i.args.slice(2).join(" ") : ""}`;
+        return `${StringOp(i.operation)} TIME ${i.args[0]} ${i.args[1]}${i.args.length > 2 ? " " + i.args.slice(2).join(" ") : ""}`;
       } else {
         return ``;
       }
