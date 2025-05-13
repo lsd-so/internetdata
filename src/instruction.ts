@@ -1,5 +1,5 @@
-import { AliasArgument } from "./argument";
-import { Operation, StringOp } from "./operation";
+import { AliasArgument } from "@argument";
+import { Operation, StringOp } from "@operation";
 
 export interface Instruction {
   operation: Operation;

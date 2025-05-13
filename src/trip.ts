@@ -1,10 +1,10 @@
 import { z } from "zod";
 
-import { AliasArgument } from "./argument";
-import { Connection } from "./connection";
-import { Instruction, StringInstruction } from "./instruction";
-import { Operation, OperationIsAssigning } from "./operation";
-import { Target } from "./target";
+import { AliasArgument } from "@argument";
+import { Connection } from "@connection";
+import { Instruction, StringInstruction } from "@instruction";
+import { Operation, OperationIsAssigning } from "@operation";
+import { Target } from "@target";
 
 export class Trip {
   // The postgres connection abstraction for executing queries

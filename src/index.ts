@@ -1,5 +1,5 @@
-import { Connection, ConnectionConfiguration } from "./connection";
-import { Trip } from "./trip";
+import { Connection, ConnectionConfiguration } from "@connection";
+import { Trip } from "@trip";
 
 export class LSD {
   connection: Connection;
