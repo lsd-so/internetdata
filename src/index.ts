@@ -169,7 +169,7 @@ export const StringOp = (o: Operation): String => {
 };
 
 export const OperationIsAssigning = (o: Operation): Boolean => {
-  return o === Operation.TARGET;
+  return o === Operation.TARGET || o === Operation.ASSIGN;
 };
 
 export type Target = "BROWSER" | "TRAVERSER";
@@ -389,7 +389,9 @@ export class Trip {
     );
 
     const assembledQuery =
-      assigningComponents.map((component) => StringInstruction(component)) +
+      assigningComponents
+        .map((component) => StringInstruction(component))
+        .join("\n") +
       "\n" +
       generalComponents
         .map((component) => StringInstruction(component))
