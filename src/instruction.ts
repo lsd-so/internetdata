@@ -30,6 +30,8 @@ export const StringInstruction = (i: Instruction): String => {
       return `${StringOp(i.operation)} ${i.args?.join(" ") ?? "https://lsd.so"}`;
     case Operation.GROUP:
       return `${StringOp(i.operation)} BY ${i.args?.join(" ") ?? "div"}`;
+    case Operation.RUN:
+      return `${i.args?.join(" ") ?? ""}`;
     case Operation.SELECT:
       return `${StringOp(i.operation)} ${[...(i.args || []), ...(i.aliasedArgs || []).map((aliasedArg) => (aliasedArg.alias ? aliasedArg.selecting + " AS " + aliasedArg.alias : aliasedArg.selecting))].join(", ")}`;
     case Operation.TARGET:

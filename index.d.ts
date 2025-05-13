@@ -40,6 +40,14 @@ declare module "internetdata" {
     connection: Connection;
 
     /**
+     * Calls a previously defined function by its name.
+     * @param {String} target - The name of the function to call.
+     * @param {Array<String>} [args] - Optional array of string arguments to pass to the function.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
+    apply: (target: String, args?: Array<String>) => Trip;
+
+    /**
      * Assembles the LSD query string based on all the actions and selections that have been called on this Trip.
      * @returns {string} - Returns the complete LSD query string ready for execution.
      */
