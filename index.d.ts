@@ -154,11 +154,15 @@ declare module "internetdata" {
     /**
      * Conditionally executes different flows based on a specified condition.
      * @param {String} condition - The condition to evaluate.
-     * @param {String} thenFlow - The flow to execute if the condition is true.
-     * @param {String} [elseFlow] - Optional flow to execute if the condition is false.
+     * @param {Function} thenFlow - Function that takes a Trip and returns a modified Trip, defining the behavior if condition is true.
+     * @param {Function} [elseFlow] - Optional function that takes a Trip and returns a modified Trip, defining the behavior if condition is false.
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
-    when: (condition: String, thenFlow: String, elseFlow?: String) => Trip;
+    when: (
+      condition: String,
+      thenFlow: (trip: Trip) => Trip,
+      elseFlow?: (trip: Trip) => Trip,
+    ) => Trip;
   }
 
   /**
