@@ -10,6 +10,7 @@ export enum Operation {
   SELECT = "SELECT",
   TARGET = "TARGET",
   WHEN = "WHEN",
+  WITH = "WITH",
 }
 
 export const StringOp = (o: Operation): String => {
@@ -36,6 +37,8 @@ export const StringOp = (o: Operation): String => {
       return "TARGET";
     case Operation.WHEN:
       return "WHEN";
+    case Operation.WITH:
+      return "WITH";
   }
 };
 
