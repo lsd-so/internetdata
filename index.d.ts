@@ -146,7 +146,10 @@ declare module "internetdata" {
      * @param {boolean} [showQuery] - Optional flag to print the assembled query to the console before execution.
      * @returns {Promise<T>} - Returns a promise that resolves to the parsed data matching the schema.
      */
-    extrapolate: <T extends z.ZodTypeAny>(schema: T, showQuery?: boolean) => Promise<T>;
+    extrapolate: <T extends z.ZodTypeAny>(
+      schema: T,
+      showQuery?: boolean,
+    ) => Promise<T>;
 
     /**
      * Groups results by a repeating container (defining what delineates rows)
