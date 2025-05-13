@@ -21,10 +21,13 @@ export class Trip {
     this.components = initialComponents || [];
     this.queryCache = {};
 
+    this.after = this.after.bind(this);
     this.apply = this.apply.bind(this);
+    this.around = this.around.bind(this);
     this.assembleQuery = this.assembleQuery.bind(this);
     this.associate = this.associate.bind(this);
     this.assign = this.assign.bind(this);
+    this.before = this.before.bind(this);
     this.click = this.click.bind(this);
     this.define = this.define.bind(this);
     this.dive = this.dive.bind(this);
@@ -37,6 +40,33 @@ export class Trip {
     this.on = this.on.bind(this);
     this.select = this.select.bind(this);
     this.when = this.when.bind(this);
+  }
+
+  after(timestamp: String | number, radius?: String): Trip {
+    this.components.push({
+      operation: Operation.WITH,
+      args: ["AFTER", `${timestamp}`, ...(radius ? [radius] : [])],
+    });
+
+    return this;
+  }
+
+  around(timestamp: "ANYTIME" | String | number, radius?: String): Trip {
+    this.components.push({
+      operation: Operation.WITH,
+      args: ["AROUND", `${timestamp}`, ...(radius ? [radius] : [])],
+    });
+
+    return this;
+  }
+
+  before(timestamp: String | number, radius?: String): Trip {
+    this.components.push({
+      operation: Operation.WITH,
+      args: ["BEFORE", `${timestamp}`, ...(radius ? [radius] : [])],
+    });
+
+    return this;
   }
 
   apply(target: String, args?: Array<String>): Trip {

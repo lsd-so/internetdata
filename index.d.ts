@@ -40,12 +40,28 @@ declare module "internetdata" {
     connection: Connection;
 
     /**
+     * Filters data to only include items that occurred after the specified timestamp.
+     * @param {String|number} timestamp - Unix timestamp (seconds since epoch) to use as the lower time boundary.
+     * @param {String} [radius] - Optional time radius to include around the timestamp (e.g., "1 DAYS" for one day).
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
+    after: (timestamp: String | number, radius?: String) => Trip;
+
+    /**
      * Calls a previously defined function by its name.
      * @param {String} target - The name of the function to call.
      * @param {Array<String>} [args] - Optional array of string arguments to pass to the function.
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     apply: (target: String, args?: Array<String>) => Trip;
+
+    /**
+     * Filters data to include items that occurred around the specified timestamp (both before and after).
+     * @param {"ANYTIME"|String|number} timestamp - Unix timestamp (seconds since epoch) to use as the center point, or "ANYTIME" to accept data regardless of time.
+     * @param {String} [radius] - Optional time radius to include around the timestamp (e.g., "1 DAYS" for one day).
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
+    around: (timestamp: "ANYTIME" | String | number, radius?: String) => Trip;
 
     /**
      * Assembles the LSD query string based on all the actions and selections that have been called on this Trip.
@@ -69,6 +85,14 @@ declare module "internetdata" {
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     associate: (name: String, body?: (trip: Trip) => Trip) => Trip;
+
+    /**
+     * Filters data to only include items that occurred before the specified timestamp.
+     * @param {String|number} timestamp - Unix timestamp (seconds since epoch) to use as the upper time boundary.
+     * @param {String} [radius] - Optional time radius to include around the timestamp (e.g., "1 DAYS" for one day).
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
+    before: (timestamp: String | number, radius?: String) => Trip;
 
     /**
      * Clicks on an element matching the specified selector.
