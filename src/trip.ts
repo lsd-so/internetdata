@@ -22,6 +22,7 @@ export class Trip {
     this.queryCache = {};
 
     this.assembleQuery = this.assembleQuery.bind(this);
+    this.associate = this.associate.bind(this);
     this.assign = this.assign.bind(this);
     this.click = this.click.bind(this);
     this.define = this.define.bind(this);
@@ -175,6 +176,10 @@ export class Trip {
     });
 
     return this;
+  }
+
+  associate(name: String, body?: (trip: Trip) => Trip): Trip {
+    return this.define(name, [], body);
   }
 
   define(
