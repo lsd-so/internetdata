@@ -404,8 +404,14 @@ export class Trip {
     return results;
   }
 
-  async extrapolate<T extends z.ZodTypeAny>(schema: T): Promise<T> {
+  async extrapolate<T extends z.ZodTypeAny>(
+    schema: T,
+    showQuery?: boolean,
+  ): Promise<T> {
     const assembledQuery = this.assembleQuery();
+    if (showQuery) {
+      console.log("Going to be running: ", assembledQuery);
+    }
     const conn = await this.connection.establishConnection();
     const results = await conn.unsafe(assembledQuery);
 
@@ -463,7 +469,7 @@ export class Trip {
     const tripForDefinition = new Trip(new Connection());
     const outcome = body?.(tripForDefinition);
     const bodyDefinition = outcome?.assembleQuery() ?? "";
-    functionDefinition += bodyDefinition + " |";
+    functionDefinition += bodyDefinition + " | ";
 
     this.components.push({
       operation: Operation.ASSIGN,

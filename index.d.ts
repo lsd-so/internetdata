@@ -143,9 +143,10 @@ declare module "internetdata" {
     /**
      * Executes the trip and parses the results according to the provided schema.
      * @param {T extends z.ZodTypeAny} schema - Zod schema to validate and parse the results.
+     * @param {boolean} [showQuery] - Optional flag to print the assembled query to the console before execution.
      * @returns {Promise<T>} - Returns a promise that resolves to the parsed data matching the schema.
      */
-    extrapolate: <T extends z.ZodTypeAny>(schema: T) => Promise<T>;
+    extrapolate: <T extends z.ZodTypeAny>(schema: T, showQuery?: boolean) => Promise<T>;
 
     /**
      * Groups results by a repeating container (defining what delineates rows)
