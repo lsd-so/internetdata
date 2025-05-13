@@ -21,6 +21,7 @@ export class Trip {
     this.components = initialComponents || [];
     this.queryCache = {};
 
+    this.apply = this.apply.bind(this);
     this.assembleQuery = this.assembleQuery.bind(this);
     this.associate = this.associate.bind(this);
     this.assign = this.assign.bind(this);
@@ -36,6 +37,15 @@ export class Trip {
     this.on = this.on.bind(this);
     this.select = this.select.bind(this);
     this.when = this.when.bind(this);
+  }
+
+  apply(target: String, args?: Array<String>): Trip {
+    this.components.push({
+      operation: Operation.RUN,
+      args: [target, ...(args || [])],
+    });
+
+    return this;
   }
 
   navigate(destination: String): Trip {

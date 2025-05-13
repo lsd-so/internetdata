@@ -6,6 +6,7 @@ export enum Operation {
   ENTER = "ENTER",
   FROM = "FROM",
   GROUP = "GROUP",
+  RUN = "RUN",
   SELECT = "SELECT",
   TARGET = "TARGET",
   WHEN = "WHEN",
@@ -27,6 +28,8 @@ export const StringOp = (o: Operation): String => {
       return "FROM";
     case Operation.GROUP:
       return "GROUP";
+    case Operation.RUN:
+      return "RUN";
     case Operation.SELECT:
       return "SELECT";
     case Operation.TARGET:
