@@ -366,38 +366,49 @@ export class Trip {
     return this;
   }
 
-  select(selecting: String, alias?: String): Trip {
-    this.components.push({
-      operation: Operation.SELECT,
-      aliasedArgs: [
-        {
-          selecting,
-          alias,
-        },
-      ],
-    });
+  select(selecting: String | Record<string, string>, alias?: String): Trip {
+    if (typeof selecting === "string") {
+      this.components.push({
+        operation: Operation.SELECT,
+        aliasedArgs: [
+          {
+            selecting,
+            alias,
+          },
+        ],
+      });
+    } else {
+      this.components.push({
+        operation: Operation.SELECT,
+        aliasedArgs: Object.entries(selecting).map(([k, v]) => ({
+          selecting: k,
+          alias: v,
+        })),
+      });
+    }
 
     return this;
   }
 
-  assembleQuery(): string {
-    const assigningComponents = this.components.filter((component) =>
-      OperationIsAssigning(component.operation),
-    );
-    const generalComponents = this.components.filter(
-      (component) => !OperationIsAssigning(component.operation),
-    );
+  assembleQuery(prefixWithPipeOperator?: boolean): string {
+    let encounteredFirstNonAssigning = false;
+    const assembledQuery = this.components.reduce((acc, cur) => {
+      let possiblePrefix = "";
+      if (prefixWithPipeOperator) {
+        possiblePrefix = "|> ";
+      } else if (acc.length > 0 && !OperationIsAssigning(cur.operation)) {
+        if (encounteredFirstNonAssigning) {
+          possiblePrefix = "|> ";
+        } else {
+          encounteredFirstNonAssigning = true;
+          possiblePrefix = "\n";
+        }
+      }
+      const codeToAppend = StringInstruction(cur).trim() + "\n";
+      return acc + possiblePrefix + codeToAppend;
+    }, "");
 
-    const assembledQuery =
-      assigningComponents
-        .map((component) => StringInstruction(component))
-        .join("\n") +
-      "\n" +
-      generalComponents
-        .map((component) => StringInstruction(component))
-        .join("\n|>\n");
-
-    return assembledQuery;
+    return assembledQuery.trim();
   }
 
   async execute(code: string): Promise<Array<Record<string, any>>> {
@@ -412,7 +423,7 @@ export class Trip {
   ): Promise<T> {
     const assembledQuery = this.assembleQuery();
     if (showQuery) {
-      console.log("Going to be running: ", assembledQuery);
+      console.log(`Code:\n${assembledQuery}`);
     }
     const conn = await this.connection.establishConnection();
     const results = await conn.unsafe(assembledQuery);
@@ -427,11 +438,11 @@ export class Trip {
   ): Trip {
     const thenTrip = new Trip(new Connection());
     const thenOutcome = thenFlow(thenTrip);
-    const thenDefinition = thenOutcome?.assembleQuery() ?? "";
+    const thenDefinition = thenOutcome?.assembleQuery(true) ?? "";
 
     const elseTrip = new Trip(new Connection());
     const elseOutcome = elseFlow?.(elseTrip) ?? undefined;
-    const elseDefinition = elseOutcome?.assembleQuery() ?? "";
+    const elseDefinition = elseOutcome?.assembleQuery(true) ?? "";
 
     this.components.push({
       operation: Operation.WHEN,
@@ -470,8 +481,8 @@ export class Trip {
 
     const tripForDefinition = new Trip(new Connection());
     const outcome = body?.(tripForDefinition);
-    const bodyDefinition = outcome?.assembleQuery() ?? "";
-    functionDefinition += bodyDefinition + " | ";
+    const bodyDefinition = outcome?.assembleQuery(true) ?? "";
+    functionDefinition += bodyDefinition.trim() + " |";
 
     this.components.push({
       operation: Operation.ASSIGN,
