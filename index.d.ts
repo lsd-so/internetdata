@@ -185,7 +185,10 @@ declare module "internetdata" {
      * @param {String} [alias] - Optional alias to assign to the selected data for reference in results.
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
-    select: (selecting: String, alias?: String) => Trip;
+    select: (
+      selecting: String | Record<string, string>,
+      alias?: String,
+    ) => Trip;
 
     /**
      * Conditionally executes different flows based on a specified condition.
