@@ -392,7 +392,7 @@ export class Trip {
 
   assembleQuery(prefixWithPipeOperator?: boolean): string {
     let encounteredFirstNonAssigning = false;
-    const assembledQuery = this.components.reduce((acc, cur) => {
+    const assembledQuery = this.components.reduce((acc: string, cur: Instruction) => {
       let possiblePrefix = "";
       if (prefixWithPipeOperator) {
         possiblePrefix = "|> ";
