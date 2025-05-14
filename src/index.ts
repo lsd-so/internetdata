@@ -6,20 +6,20 @@ import postgres from "postgres";
 import { z } from "zod";
 
 export interface AliasArgument {
-  selecting: String;
+  selecting: string;
 
   // alias is an optional field in case the user specifies a non-CSS selector label for the item they're interested in
-  alias?: String;
+  alias?: string;
 }
 
 export interface ConnectionConfiguration {
-  user: String;
-  password: String;
+  user: string;
+  password: string;
 }
 
 const getUserTouse = (
   connectionConfiguration?: ConnectionConfiguration,
-): String => {
+): string => {
   const userFromConfigurationObject = connectionConfiguration?.user;
   if (userFromConfigurationObject) {
     return userFromConfigurationObject;
@@ -49,7 +49,7 @@ const getUserTouse = (
 
 const getPasswordToUse = (
   connectionConfiguration?: ConnectionConfiguration,
-): String => {
+): string => {
   const passwordFromConfiguration = connectionConfiguration?.password;
   if (passwordFromConfiguration) {
     return passwordFromConfiguration;
@@ -79,7 +79,7 @@ const getPasswordToUse = (
 
 // LSDConnection abstracts the postgres connection in case there's a need to retry connecting in the middle of a run
 export class Connection {
-  host: String;
+  host: string;
   connectionConfiguration: ConnectionConfiguration;
   sqlConn?: postgres.Sql;
 
@@ -176,11 +176,11 @@ export type Target = "BROWSER" | "TRAVERSER";
 
 export interface Instruction {
   operation: Operation;
-  args?: Array<String>;
+  args?: Array<string>;
   aliasedArgs?: Array<AliasArgument>;
-  conditionalArgs?: Array<String>;
-  thenFlow?: Array<String>;
-  elseFlow?: Array<String>;
+  conditionalArgs?: Array<string>;
+  thenFlow?: Array<string>;
+  elseFlow?: Array<string>;
 }
 
 export const StringInstruction = (i: Instruction): String => {
@@ -256,7 +256,7 @@ export class Trip {
     this.when = this.when.bind(this);
   }
 
-  after(timestamp: String | number, radius?: String): Trip {
+  after(timestamp: string | number, radius?: string): Trip {
     this.components.push({
       operation: Operation.WITH,
       args: ["AFTER", `${timestamp}`, ...(radius ? [radius] : [])],
@@ -265,7 +265,7 @@ export class Trip {
     return this;
   }
 
-  around(timestamp: "ANYTIME" | String | number, radius?: String): Trip {
+  around(timestamp: "ANYTIME" | string | number, radius?: string): Trip {
     this.components.push({
       operation: Operation.WITH,
       args: ["AROUND", `${timestamp}`, ...(radius ? [radius] : [])],
@@ -274,7 +274,7 @@ export class Trip {
     return this;
   }
 
-  before(timestamp: String | number, radius?: String): Trip {
+  before(timestamp: string | number, radius?: string): Trip {
     this.components.push({
       operation: Operation.WITH,
       args: ["BEFORE", `${timestamp}`, ...(radius ? [radius] : [])],
@@ -283,7 +283,7 @@ export class Trip {
     return this;
   }
 
-  apply(target: String, args?: Array<String>): Trip {
+  apply(target: string, args?: Array<string>): Trip {
     this.components.push({
       operation: Operation.RUN,
       args: [target, ...(args || [])],
@@ -292,7 +292,7 @@ export class Trip {
     return this;
   }
 
-  navigate(destination: String): Trip {
+  navigate(destination: string): Trip {
     this.components.push({
       operation: Operation.FROM,
       args: [destination],
@@ -301,7 +301,7 @@ export class Trip {
     return this;
   }
 
-  click(selector: String, times?: number): Trip {
+  click(selector: string, times?: number): Trip {
     if (times !== undefined) {
       let counter = 0;
       while (counter < times) {
@@ -321,7 +321,7 @@ export class Trip {
     return this;
   }
 
-  dive(target: String): Trip {
+  dive(target: string): Trip {
     this.components.push({
       operation: Operation.DIVE,
       args: [target],
@@ -330,7 +330,7 @@ export class Trip {
     return this;
   }
 
-  enter(selector: String, textToEnter: String): Trip {
+  enter(selector: string, textToEnter: string): Trip {
     this.components.push({
       operation: Operation.ENTER,
       args: [selector, textToEnter],
@@ -339,7 +339,7 @@ export class Trip {
     return this;
   }
 
-  imitate(skillIdentifier: String): Trip {
+  imitate(skillIdentifier: string): Trip {
     this.components.push({
       operation: Operation.ACCORDING,
       args: [skillIdentifier],
@@ -357,7 +357,7 @@ export class Trip {
     return this;
   }
 
-  group(groupingBy: String): Trip {
+  group(groupingBy: string): Trip {
     this.components.push({
       operation: Operation.GROUP,
       args: [groupingBy],
@@ -366,7 +366,7 @@ export class Trip {
     return this;
   }
 
-  select(selecting: String | Record<string, string>, alias?: String): Trip {
+  select(selecting: string | Record<string, string>, alias?: string): Trip {
     if (typeof selecting === "string") {
       this.components.push({
         operation: Operation.SELECT,
@@ -432,7 +432,7 @@ export class Trip {
   }
 
   when(
-    condition: String,
+    condition: string,
     thenFlow: (trip: Trip) => Trip,
     elseFlow?: (trip: Trip) => Trip,
   ): Trip {
@@ -454,7 +454,7 @@ export class Trip {
     return this;
   }
 
-  assign(name: String, value: String): Trip {
+  assign(name: string, value: string): Trip {
     this.components.push({
       operation: Operation.ASSIGN,
       args: [`${name} <| ${value} |`],
@@ -463,12 +463,12 @@ export class Trip {
     return this;
   }
 
-  associate(name: String, body?: (trip: Trip) => Trip): Trip {
+  associate(name: string, body?: (trip: Trip) => Trip): Trip {
     return this.define(name, [], body);
   }
 
   define(
-    name: String,
+    name: string,
     args?: Array<AliasArgument>,
     body?: (trip: Trip) => Trip,
   ): Trip {
