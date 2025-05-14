@@ -423,7 +423,7 @@ export class Trip {
   ): Promise<T> {
     const assembledQuery = this.assembleQuery();
     if (showQuery) {
-      console.log(`Code:\n${assembledQuery}`);
+      console.log(`Here is the assmbled LSD code:\n\n${assembledQuery}`);
     }
     const conn = await this.connection.establishConnection();
     const results = await conn.unsafe(assembledQuery);
