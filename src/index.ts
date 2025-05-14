@@ -392,21 +392,24 @@ export class Trip {
 
   assembleQuery(prefixWithPipeOperator?: boolean): string {
     let encounteredFirstNonAssigning = false;
-    const assembledQuery = this.components.reduce((acc: string, cur: Instruction) => {
-      let possiblePrefix = "";
-      if (prefixWithPipeOperator) {
-        possiblePrefix = "|> ";
-      } else if (acc.length > 0 && !OperationIsAssigning(cur.operation)) {
-        if (encounteredFirstNonAssigning) {
+    const assembledQuery = this.components.reduce(
+      (acc: string, cur: Instruction) => {
+        let possiblePrefix = "";
+        if (prefixWithPipeOperator) {
           possiblePrefix = "|> ";
-        } else {
-          encounteredFirstNonAssigning = true;
-          possiblePrefix = "\n";
+        } else if (acc.length > 0 && !OperationIsAssigning(cur.operation)) {
+          if (encounteredFirstNonAssigning) {
+            possiblePrefix = "|> ";
+          } else {
+            encounteredFirstNonAssigning = true;
+            possiblePrefix = "\n";
+          }
         }
-      }
-      const codeToAppend = StringInstruction(cur).trim() + "\n";
-      return acc + possiblePrefix + codeToAppend;
-    }, "");
+        const codeToAppend = StringInstruction(cur).trim() + "\n";
+        return acc + possiblePrefix + codeToAppend;
+      },
+      "",
+    );
 
     return assembledQuery.trim();
   }
@@ -423,7 +426,7 @@ export class Trip {
   ): Promise<T> {
     const assembledQuery = this.assembleQuery();
     if (showQuery) {
-      console.log(`Here is the assmbled LSD code:\n\n${assembledQuery}`);
+      console.log(`Here is the assembled LSD code:\n\n${assembledQuery}`);
     }
     const conn = await this.connection.establishConnection();
     const results = await conn.unsafe(assembledQuery);
