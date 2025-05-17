@@ -116,6 +116,14 @@ declare module "internetdata" {
     ) => Trip;
 
     /**
+     * Filters results to include only distinct values for the specified column.
+     * Works similarly to the DISTINCT keyword in SQL, removing duplicate values.
+     * @param {string} col - The column or field name to apply the distinct filter to.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
+    distinct: (col: string) => Trip;
+
+    /**
      * Navigates into a specific link or set of links from the current page to proceed with remaining instructions.
      * May be done in parallel with cloud browsers or in sequence on a local browser
      * @param {string} target - Selector or identifier for the variable/element to dive into.

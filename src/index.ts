@@ -128,6 +128,7 @@ export enum Operation {
   ACCORDING = "ACCORDING",
   ASSIGN = "ASSIGN",
   CLICK = "CLICK",
+  DISTINCT = "DISTINCT",
   DIVE = "DIVE",
   ENTER = "ENTER",
   FROM = "FROM",
@@ -147,6 +148,8 @@ export const StringOp = (o: Operation): String => {
       return "ASSIGN";
     case Operation.CLICK:
       return "CLICK";
+    case Operation.DISTINCT:
+      return "DISTINCT";
     case Operation.DIVE:
       return "DIVE";
     case Operation.ENTER:
@@ -195,6 +198,10 @@ export const StringInstruction = (i: Instruction): String => {
       return "";
     case Operation.CLICK:
       return `${StringOp(i.operation)} ON ${i.args?.join(" ") ?? "a"}`;
+    case Operation.DISTINCT:
+      if (i.args && i.args.length > 0) {
+        return `${StringOp(i.operation)} ${i.args.join(" ")}`;
+      }
     case Operation.DIVE:
       return `${StringOp(i.operation)} INTO ${i.args?.join(" ") ?? "invalid"}`;
     case Operation.ENTER:
@@ -244,6 +251,7 @@ export class Trip {
     this.before = this.before.bind(this);
     this.click = this.click.bind(this);
     this.define = this.define.bind(this);
+    this.distinct = this.distinct.bind(this);
     this.dive = this.dive.bind(this);
     this.enter = this.enter.bind(this);
     this.execute = this.execute.bind(this);
@@ -278,6 +286,15 @@ export class Trip {
     this.components.push({
       operation: Operation.WITH,
       args: ["BEFORE", `${timestamp}`, ...(radius ? [radius] : [])],
+    });
+
+    return this;
+  }
+
+  distinct(col: string): Trip {
+    this.components.push({
+      operation: Operation.DISTINCT,
+      args: [col],
     });
 
     return this;
