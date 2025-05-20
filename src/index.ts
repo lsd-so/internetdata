@@ -135,6 +135,7 @@ export enum Operation {
   GROUP = "GROUP",
   RUN = "RUN",
   SELECT = "SELECT",
+  SLEEP = "SLEEP",
   TARGET = "TARGET",
   WHEN = "WHEN",
   WITH = "WITH",
@@ -162,6 +163,8 @@ export const StringOp = (o: Operation): String => {
       return "RUN";
     case Operation.SELECT:
       return "SELECT";
+    case Operation.SLEEP:
+      return "SLEEP";
     case Operation.TARGET:
       return "TARGET";
     case Operation.WHEN:
@@ -214,6 +217,10 @@ export const StringInstruction = (i: Instruction): String => {
       return `${i.args?.join(" ") ?? ""}`;
     case Operation.SELECT:
       return `${StringOp(i.operation)} ${[...(i.args || []), ...(i.aliasedArgs || []).map((aliasedArg) => (aliasedArg.alias ? aliasedArg.selecting + " AS " + aliasedArg.alias : aliasedArg.selecting))].join(", ")}`;
+    case Operation.SLEEP:
+      if (i.args?.length ?? 0 > 0) {
+        return `${StringOp(i.operation)} ${[...(i.args || [])]}`;
+      }
     case Operation.TARGET:
       return `${StringOp(i.operation)} <| ${i.args?.join(" ") ?? "TRAVERSER"} |`;
     case Operation.WHEN:
@@ -261,6 +268,7 @@ export class Trip {
     this.navigate = this.navigate.bind(this);
     this.on = this.on.bind(this);
     this.select = this.select.bind(this);
+    this.sleep = this.sleep.bind(this);
     this.when = this.when.bind(this);
   }
 
@@ -403,6 +411,15 @@ export class Trip {
         })),
       });
     }
+
+    return this;
+  }
+
+  sleep(duration: number | string): Trip {
+    this.components.push({
+      operation: Operation.SLEEP,
+      args: [`${duration}`],
+    });
 
     return this;
   }

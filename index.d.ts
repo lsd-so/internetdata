@@ -187,6 +187,7 @@ declare module "internetdata" {
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     on: (target: string) => Trip;
+
     /**
      * Selects specific elements or data from the current page. Attempts to grab first from within the repeating container, than checks the container itself, then attempts to retrieve from the page itself.
      * @param {string} selecting - CSS selector or expression for the values to select.
@@ -197,6 +198,13 @@ declare module "internetdata" {
       selecting: string | Record<string, string>,
       alias?: string,
     ) => Trip;
+
+    /**
+     * Pauses execution for the specified duration.
+     * @param {string|number} duration - The number of seconds to sleep, can be provided as a string or number.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
+    sleep: (duration: string | number) => Trip;
 
     /**
      * Conditionally executes different flows based on a specified condition.
