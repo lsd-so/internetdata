@@ -134,6 +134,7 @@ export enum Operation {
   FROM = "FROM",
   GROUP = "GROUP",
   RUN = "RUN",
+  SEARCH = "SEARCH",
   SELECT = "SELECT",
   SLEEP = "SLEEP",
   TARGET = "TARGET",
@@ -161,6 +162,8 @@ export const StringOp = (o: Operation): String => {
       return "GROUP";
     case Operation.RUN:
       return "RUN";
+    case Operation.SEARCH:
+      return "SEARCH";
     case Operation.SELECT:
       return "SELECT";
     case Operation.SLEEP:
@@ -215,6 +218,10 @@ export const StringInstruction = (i: Instruction): String => {
       return `${StringOp(i.operation)} BY ${i.args?.join(" ") ?? "div"}`;
     case Operation.RUN:
       return `${i.args?.join(" ") ?? ""}`;
+    case Operation.SEARCH:
+      if (i.args?.length ?? 0 > 0) {
+        return `${StringOp(i.operation)} ${i.args?.join(" ")}`;
+      }
     case Operation.SELECT:
       return `${StringOp(i.operation)} ${[...(i.args || []), ...(i.aliasedArgs || []).map((aliasedArg) => (aliasedArg.alias ? aliasedArg.selecting + " AS " + aliasedArg.alias : aliasedArg.selecting))].join(", ")}`;
     case Operation.SLEEP:
@@ -267,6 +274,7 @@ export class Trip {
     this.imitate = this.imitate.bind(this);
     this.navigate = this.navigate.bind(this);
     this.on = this.on.bind(this);
+    this.search = this.search.bind(this);
     this.select = this.select.bind(this);
     this.sleep = this.sleep.bind(this);
     this.when = this.when.bind(this);
@@ -386,6 +394,15 @@ export class Trip {
     this.components.push({
       operation: Operation.GROUP,
       args: [groupingBy],
+    });
+
+    return this;
+  }
+
+  search(query: string): Trip {
+    this.components.push({
+      operation: Operation.SEARCH,
+      args: [query],
     });
 
     return this;

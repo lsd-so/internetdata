@@ -189,6 +189,13 @@ declare module "internetdata" {
     on: (target: string) => Trip;
 
     /**
+     * Performs a search operation using the provided query.
+     * @param {string} query - The search query string, or a reference to a variable containing a string or list of search terms.
+     * @returns {Trip} - Returns the Trip instance for method chaining.
+     */
+    search: (query: string) => Trip;
+
+    /**
      * Selects specific elements or data from the current page. Attempts to grab first from within the repeating container, than checks the container itself, then attempts to retrieve from the page itself.
      * @param {string} selecting - CSS selector or expression for the values to select.
      * @param {string} [alias] - Optional alias to assign to the selected data for reference in results.
