@@ -408,7 +408,10 @@ export class Trip {
     return this;
   }
 
-  select(selecting: string | Record<string, string>, alias?: string): Trip {
+  select(
+    selecting: string | Record<string, string> | Array<string>,
+    alias?: string,
+  ): Trip {
     if (typeof selecting === "string") {
       this.components.push({
         operation: Operation.SELECT,
@@ -418,6 +421,14 @@ export class Trip {
             alias,
           },
         ],
+      });
+    } else if (Array.isArray(selecting)) {
+      this.components.push({
+        operation: Operation.SELECT,
+        aliasedArgs: selecting.map((exp) => ({
+          selecting: exp,
+          alias: exp,
+        })),
       });
     } else {
       this.components.push({
