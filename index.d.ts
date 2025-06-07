@@ -197,12 +197,17 @@ declare module "internetdata" {
 
     /**
      * Selects specific elements or data from the current page. Attempts to grab first from within the repeating container, than checks the container itself, then attempts to retrieve from the page itself.
-     * @param {string} selecting - CSS selector or expression for the values to select.
+     * @param {string|Record<string,string>|Array<string>} selecting - CSS selector or expression for the values to select. Can be:
+     *   - A string representing a single CSS selector
+     *   - An object mapping field names to CSS selectors
+     *   - An array of CSS selectors to select multiple elements
      * @param {string} [alias] - Optional alias to assign to the selected data for reference in results.
+     *   When using a string selector, this becomes the field name in results.
+     *   When using an object or array of selectors, this parameter is ignored.
      * @returns {Trip} - Returns the Trip instance for method chaining.
      */
     select: (
-      selecting: string | Record<string, string>,
+      selecting: string | Record<string, string> | Array<string>,
       alias?: string,
     ) => Trip;
 
